@@ -20,6 +20,7 @@ import {
 import { ArtisanUser, CatalogItem, RecentOrder, LanguageCode } from "../../types/artisan";
 import { TTSButton } from "../common/TTSButton";
 import { useTheme } from "../../context/ThemeContext";
+import { PWAInstallSettingItem } from "../../pwa/PWAInstallSettingItem";
 
 interface SellerAccountScreenProps {
   user: ArtisanUser | null;
@@ -248,6 +249,8 @@ export const SellerAccountScreen: React.FC<SellerAccountScreenProps> = ({
               </button>
             </div>
           </div>
+
+          <PWAInstallSettingItem language={language} />
         </div>
 
         {/* Quick Links & Developer Tools */}

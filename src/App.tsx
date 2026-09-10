@@ -30,6 +30,8 @@ import { BuyerMarketplaceScreen } from "./components/screens/BuyerMarketplaceScr
 import { CodeInspectorModal } from "./components/modals/CodeInspectorModal";
 import { AppShell } from "./components/layout/AppShell";
 import { SellerWorkspace } from "./components/seller/SellerWorkspace";
+import { AnimatePresence, motion } from "motion/react";
+import { screenVariants } from "./utils/motion";
 import {
   Flame,
   Camera,
@@ -206,85 +208,127 @@ export default function App() {
 
   return (
     <AppShell theme={isBuyer ? "buyer" : isSplash ? "dark" : "seller"}>
+      <AnimatePresence mode="wait">
+        {/* 1. Splash Screen */}
+        {currentScreen === "splash" && (
+          <motion.div
+            key="screen-splash"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full h-full"
+          >
+            <SplashScreen language={language} onFinish={handleSplashFinish} />
+          </motion.div>
+        )}
 
-      {/* 1. Splash Screen */}
-      {currentScreen === "splash" && (
-        <SplashScreen language={language} onFinish={handleSplashFinish} />
-      )}
+        {/* 2. Authentication Screen */}
+        {currentScreen === "auth" && (
+          <motion.div
+            key="screen-auth"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full h-full flex items-center justify-center p-0 sm:p-4 md:p-6 overflow-y-auto"
+          >
+            <div className="w-full max-w-md h-full sm:h-auto sm:max-h-[90vh] sm:rounded-3xl sm:border sm:border-kk-line sm:shadow-lg overflow-hidden flex flex-col bg-kk-surface text-kk-ink">
+              <AuthScreen
+                language={language}
+                onLoginSuccess={handleLogin}
+                onCustomerLogin={() => setCurrentScreen("buyer_home")}
+                onLanguageChange={(lang) => setLanguage(lang)}
+              />
+            </div>
+          </motion.div>
+        )}
 
-      {/* 2. Authentication Screen */}
-      {currentScreen === "auth" && (
-        <div className="w-full h-full flex items-center justify-center p-0 sm:p-4 md:p-6 overflow-y-auto">
-          <div className="w-full max-w-md h-full sm:h-auto sm:max-h-[90vh] sm:rounded-3xl sm:border sm:border-kk-line sm:shadow-lg overflow-hidden flex flex-col bg-kk-surface text-kk-ink">
-            <AuthScreen
+        {/* 3. Customer Marketplace Screen */}
+        {currentScreen === "buyer_home" && (
+          <motion.div
+            key="screen-buyer-home"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full h-full flex flex-col"
+          >
+            <BuyerMarketplaceScreen
+              catalogItems={catalogItems}
               language={language}
-              onLoginSuccess={handleLogin}
-              onCustomerLogin={() => setCurrentScreen("buyer_home")}
               onLanguageChange={(lang) => setLanguage(lang)}
+              onSwitchToSeller={() => setCurrentScreen("dashboard")}
+              onLogout={() => setCurrentScreen("auth")}
+              onOpenAdminMarketData={() => setCurrentScreen("admin_market_data")}
+              onOpenCodeModal={() => setIsCodeModalOpen(true)}
             />
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
 
-      {/* 3. Customer Marketplace Screen */}
-      {currentScreen === "buyer_home" && (
-        <BuyerMarketplaceScreen
-          catalogItems={catalogItems}
-          language={language}
-          onLanguageChange={(lang) => setLanguage(lang)}
-          onSwitchToSeller={() => setCurrentScreen("dashboard")}
-          onLogout={() => setCurrentScreen("auth")}
-          onOpenAdminMarketData={() => setCurrentScreen("admin_market_data")}
-          onOpenCodeModal={() => setIsCodeModalOpen(true)}
-        />
-      )}
-
-      {/* 4. Seller Workspace Screen */}
-      {isSeller && (
-        <SellerWorkspace
-          currentScreen={currentScreen}
-          user={user}
-          language={language}
-          catalogItems={catalogItems}
-          recentOrders={recentOrders}
-          onNavigate={(screen) => setCurrentScreen(screen)}
-          onLanguageChange={(lang) => setLanguage(lang)}
-          onLogout={handleLogout}
-          onNavigateBuyer={() => setCurrentScreen("buyer_home")}
-          onOpenAdminMarketData={() => setCurrentScreen("admin_market_data")}
-          onOpenCodeModal={() => setIsCodeModalOpen(true)}
-          onStartSell={handleStartSellFlow}
-          onSelectItem={handleSelectItem}
-          onUpdateStock={(id, newStock) => {
-            setCatalogItems((prev) =>
-              prev.map((it) => (it.id === id ? { ...it, stockCount: newStock } : it))
-            );
-          }}
-          selectedCraft={selectedCraft}
-          onSelectCraft={(craft) => setSelectedCraft(craft)}
-          rawImage={rawImage}
-          studioImage={studioImage}
-          catalogData={catalogData}
-          onProceedFromOnboarding={handleProceedFromOnboarding}
-          onImageReady={handleImageReady}
-          onCatalogReady={handleCatalogReady}
-          onPriceSelected={handlePriceSelected}
-          onPublishDone={handlePublishDone}
-          sellSteps={sellSteps}
-          currentSellStepNum={currentSellStepNum}
-        />
-      )}
-
-      {/* 5. Market Price Admin View */}
-      {currentScreen === "admin_market_data" && (
-        <div className="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden bg-slate-950 text-white overscroll-contain">
-          <div className="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-0">
-            <MarketDataAdminScreen
-              onBack={() => setCurrentScreen(user ? "dashboard" : "buyer_home")}
+        {/* 4. Seller Workspace Screen */}
+        {isSeller && (
+          <motion.div
+            key="screen-seller-workspace"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full h-full flex flex-col"
+          >
+            <SellerWorkspace
+              currentScreen={currentScreen}
+              user={user}
+              language={language}
+              catalogItems={catalogItems}
+              recentOrders={recentOrders}
+              onNavigate={(screen) => setCurrentScreen(screen)}
+              onLanguageChange={(lang) => setLanguage(lang)}
+              onLogout={handleLogout}
+              onNavigateBuyer={() => setCurrentScreen("buyer_home")}
+              onOpenAdminMarketData={() => setCurrentScreen("admin_market_data")}
+              onOpenCodeModal={() => setIsCodeModalOpen(true)}
+              onStartSell={handleStartSellFlow}
+              onSelectItem={handleSelectItem}
+              onUpdateStock={(id, newStock) => {
+                setCatalogItems((prev) =>
+                  prev.map((it) => (it.id === id ? { ...it, stockCount: newStock } : it))
+                );
+              }}
+              selectedCraft={selectedCraft}
+              onSelectCraft={(craft) => setSelectedCraft(craft)}
+              rawImage={rawImage}
+              studioImage={studioImage}
+              catalogData={catalogData}
+              onProceedFromOnboarding={handleProceedFromOnboarding}
+              onImageReady={handleImageReady}
+              onCatalogReady={handleCatalogReady}
+              onPriceSelected={handlePriceSelected}
+              onPublishDone={handlePublishDone}
+              sellSteps={sellSteps}
+              currentSellStepNum={currentSellStepNum}
             />
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+
+        {/* 5. Market Price Admin View */}
+        {currentScreen === "admin_market_data" && (
+          <motion.div
+            key="screen-admin-market-data"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden bg-slate-950 text-white overscroll-contain"
+          >
+            <div className="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-0">
+              <MarketDataAdminScreen
+                onBack={() => setCurrentScreen(user ? "dashboard" : "buyer_home")}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Jetpack Compose Native Architecture Modal */}
       <CodeInspectorModal

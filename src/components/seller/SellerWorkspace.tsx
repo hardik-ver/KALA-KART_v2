@@ -36,6 +36,8 @@ import {
 } from "lucide-react";
 import type { AppScreen } from "../../App";
 import { useTheme } from "../../context/ThemeContext";
+import { AnimatePresence, motion } from "motion/react";
+import { screenVariants, dropdownVariants } from "../../utils/motion";
 
 interface SellStepInfo {
   id: string;
@@ -272,12 +274,17 @@ export const SellerWorkspace: React.FC<SellerWorkspaceProps> = ({
               <Settings className="w-4 h-4" />
             </button>
 
-            {showAdminMenu && (
-              <div
-                className="absolute right-0 top-12 w-64 bg-white rounded-2xl border border-kk-line shadow-xl p-3 space-y-2 z-50 animate-in fade-in duration-150"
-                role="dialog"
-                aria-label="Seller Settings and Admin"
-              >
+            <AnimatePresence>
+              {showAdminMenu && (
+                <motion.div
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="absolute right-0 top-12 w-64 bg-white rounded-2xl border border-kk-line shadow-xl p-3 space-y-2 z-50 origin-top-right"
+                  role="dialog"
+                  aria-label="Seller Settings and Admin"
+                >
                 <div className="flex items-center justify-between pb-2 border-b border-kk-line/60">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-lg bg-kk-primary-soft text-kk-primary-dark flex items-center justify-center font-bold text-xs">
@@ -401,9 +408,10 @@ export const SellerWorkspace: React.FC<SellerWorkspaceProps> = ({
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
+        </div>
         </div>
       </header>
 
@@ -474,134 +482,199 @@ export const SellerWorkspace: React.FC<SellerWorkspaceProps> = ({
 
         {/* Screen Content */}
         <div className="flex-1 min-h-0 flex flex-col">
-          {/* Main Dashboard Screen */}
-          {currentScreen === "dashboard" && (
-            <div className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1">
-              <SellerDashboardScreen
-                user={user}
-                language={language}
-                catalogItems={catalogItems}
-                recentOrders={recentOrders}
-                onStartSell={onStartSell}
-                onViewInventory={() => onNavigate("inventory")}
-                onNavigateBuyer={onNavigateBuyer}
-                onSelectItem={onSelectItem}
-                onLanguageChange={onLanguageChange}
-                onLogout={onLogout}
-                onOpenAdminMarketData={onOpenAdminMarketData}
-                onOpenCodeModal={onOpenCodeModal}
-              />
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            {/* Main Dashboard Screen */}
+            {currentScreen === "dashboard" && (
+              <motion.div
+                key="workspace-dashboard"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1"
+              >
+                <SellerDashboardScreen
+                  user={user}
+                  language={language}
+                  catalogItems={catalogItems}
+                  recentOrders={recentOrders}
+                  onStartSell={onStartSell}
+                  onViewInventory={() => onNavigate("inventory")}
+                  onNavigateBuyer={onNavigateBuyer}
+                  onSelectItem={onSelectItem}
+                  onLanguageChange={onLanguageChange}
+                  onLogout={onLogout}
+                  onOpenAdminMarketData={onOpenAdminMarketData}
+                  onOpenCodeModal={onOpenCodeModal}
+                />
+              </motion.div>
+            )}
 
-          {/* Full Inventory Screen */}
-          {currentScreen === "inventory" && (
-            <div className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1">
-              <InventoryScreen
-                items={catalogItems}
-                language={language}
-                onBack={() => onNavigate("dashboard")}
-                onAddNew={onStartSell}
-                onUpdateStock={onUpdateStock}
-              />
-            </div>
-          )}
+            {/* Full Inventory Screen */}
+            {currentScreen === "inventory" && (
+              <motion.div
+                key="workspace-inventory"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1"
+              >
+                <InventoryScreen
+                  items={catalogItems}
+                  language={language}
+                  onBack={() => onNavigate("dashboard")}
+                  onAddNew={onStartSell}
+                  onUpdateStock={onUpdateStock}
+                />
+              </motion.div>
+            )}
 
-          {/* Orders Screen */}
-          {currentScreen === "orders" && (
-            <div className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1">
-              <SellerOrdersScreen
-                orders={recentOrders}
-                language={language}
-                onBack={() => onNavigate("dashboard")}
-                onAddNewCraft={onStartSell}
-              />
-            </div>
-          )}
+            {/* Orders Screen */}
+            {currentScreen === "orders" && (
+              <motion.div
+                key="workspace-orders"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1"
+              >
+                <SellerOrdersScreen
+                  orders={recentOrders}
+                  language={language}
+                  onBack={() => onNavigate("dashboard")}
+                  onAddNewCraft={onStartSell}
+                />
+              </motion.div>
+            )}
 
-          {/* Account Screen */}
-          {currentScreen === "account" && (
-            <div className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1">
-              <SellerAccountScreen
-                user={user}
-                language={language}
-                catalogItems={catalogItems}
-                recentOrders={recentOrders}
-                onLanguageChange={onLanguageChange}
-                onLogout={onLogout}
-                onNavigateBuyer={onNavigateBuyer}
-                onOpenAdminMarketData={onOpenAdminMarketData}
-                onOpenCodeModal={onOpenCodeModal}
-                onBack={() => onNavigate("dashboard")}
-              />
-            </div>
-          )}
+            {/* Account Screen */}
+            {currentScreen === "account" && (
+              <motion.div
+                key="workspace-account"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-5xl mx-auto h-full flex flex-col flex-1"
+              >
+                <SellerAccountScreen
+                  user={user}
+                  language={language}
+                  catalogItems={catalogItems}
+                  recentOrders={recentOrders}
+                  onLanguageChange={onLanguageChange}
+                  onLogout={onLogout}
+                  onNavigateBuyer={onNavigateBuyer}
+                  onOpenAdminMarketData={onOpenAdminMarketData}
+                  onOpenCodeModal={onOpenCodeModal}
+                  onBack={() => onNavigate("dashboard")}
+                />
+              </motion.div>
+            )}
 
-          {/* Sell Flow Step 1: Craft Selection */}
-          {currentScreen === "sell_onboarding" && (
-            <div className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1">
-              <OnboardingScreen
-                selectedCraft={selectedCraft}
-                onSelectCraft={onSelectCraft}
-                language={language}
-                onLanguageChange={onLanguageChange}
-                onProceed={onProceedFromOnboarding}
-                onBack={() => onNavigate("dashboard")}
-              />
-            </div>
-          )}
+            {/* Sell Flow Step 1: Craft Selection */}
+            {currentScreen === "sell_onboarding" && (
+              <motion.div
+                key="workspace-sell-onboarding"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1"
+              >
+                <OnboardingScreen
+                  selectedCraft={selectedCraft}
+                  onSelectCraft={onSelectCraft}
+                  language={language}
+                  onLanguageChange={onLanguageChange}
+                  onProceed={onProceedFromOnboarding}
+                  onBack={() => onNavigate("dashboard")}
+                />
+              </motion.div>
+            )}
 
-          {/* Sell Flow Step 2: AI Image Studio */}
-          {currentScreen === "sell_studio" && selectedCraft && (
-            <div className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1">
-              <ImageStudioScreen
-                selectedCraft={selectedCraft}
-                initialRawImage={rawImage || null}
-                initialStudioImage={studioImage || null}
-                language={language}
-                onImageReady={onImageReady}
-                onBack={() => onNavigate("sell_onboarding")}
-              />
-            </div>
-          )}
+            {/* Sell Flow Step 2: AI Image Studio */}
+            {currentScreen === "sell_studio" && selectedCraft && (
+              <motion.div
+                key="workspace-sell-studio"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1"
+              >
+                <ImageStudioScreen
+                  selectedCraft={selectedCraft}
+                  initialRawImage={rawImage || null}
+                  initialStudioImage={studioImage || null}
+                  language={language}
+                  onImageReady={onImageReady}
+                  onBack={() => onNavigate("sell_onboarding")}
+                />
+              </motion.div>
+            )}
 
-          {/* Sell Flow Step 3: Voice Catalog AI */}
-          {currentScreen === "sell_voice" && selectedCraft && (
-            <div className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1">
-              <VoiceCatalogScreen
-                selectedCraft={selectedCraft}
-                studioImage={studioImage}
-                language={language}
-                catalogData={catalogData}
-                onCatalogReady={onCatalogReady}
-                onBack={() => onNavigate("sell_studio")}
-              />
-            </div>
-          )}
+            {/* Sell Flow Step 3: Voice Catalog AI */}
+            {currentScreen === "sell_voice" && selectedCraft && (
+              <motion.div
+                key="workspace-sell-voice"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1"
+              >
+                <VoiceCatalogScreen
+                  selectedCraft={selectedCraft}
+                  studioImage={studioImage}
+                  language={language}
+                  catalogData={catalogData}
+                  onCatalogReady={onCatalogReady}
+                  onBack={() => onNavigate("sell_studio")}
+                />
+              </motion.div>
+            )}
 
-          {/* Sell Flow Step 4: Smart Fair Pricing */}
-          {currentScreen === "sell_pricing" && catalogData && (
-            <div className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1">
-              <PricingAssistantScreen
-                catalog={catalogData}
-                language={language}
-                onPriceSelected={onPriceSelected}
-                onBack={() => onNavigate("sell_voice")}
-              />
-            </div>
-          )}
+            {/* Sell Flow Step 4: Smart Fair Pricing */}
+            {currentScreen === "sell_pricing" && catalogData && (
+              <motion.div
+                key="workspace-sell-pricing"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1"
+              >
+                <PricingAssistantScreen
+                  catalog={catalogData}
+                  language={language}
+                  onPriceSelected={onPriceSelected}
+                  onBack={() => onNavigate("sell_voice")}
+                />
+              </motion.div>
+            )}
 
-          {/* Sell Flow Step 5: Publish & Syndication */}
-          {currentScreen === "sell_publish" && catalogData && (
-            <div className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1">
-              <MarketplaceListingScreen
-                catalog={catalogData}
-                language={language}
-                onReset={onPublishDone}
-                onBack={() => onNavigate("sell_pricing")}
-              />
-            </div>
-          )}
+            {/* Sell Flow Step 5: Publish & Syndication */}
+            {currentScreen === "sell_publish" && catalogData && (
+              <motion.div
+                key="workspace-sell-publish"
+                variants={screenVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full max-w-3xl mx-auto h-full flex flex-col flex-1"
+              >
+                <MarketplaceListingScreen
+                  catalog={catalogData}
+                  language={language}
+                  onReset={onPublishDone}
+                  onBack={() => onNavigate("sell_pricing")}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

@@ -12,6 +12,8 @@ import {
   Palette,
   FileText
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { modalBackdropVariants, modalScaleVariants } from "../../utils/motion";
 
 interface CodeInspectorModalProps {
   isOpen: boolean;
@@ -26,8 +28,6 @@ export const CodeInspectorModal: React.FC<CodeInspectorModalProps> = ({
     JETPACK_COMPOSE_ARCHITECTURE[0]
   );
   const [copied, setCopied] = useState<boolean>(false);
-
-  if (!isOpen) return null;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(selectedFile.code);
@@ -51,37 +51,53 @@ export const CodeInspectorModal: React.FC<CodeInspectorModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-6 animate-in fade-in">
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden shadow-2xl">
-        {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
-              <Code2 className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-base text-white">
-                  SIH 2026 Kotlin & Jetpack Compose Architecture
-                </h3>
-                <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                  Android Native • Problem #26090
-                </span>
-              </div>
-              <p className="text-xs text-slate-400">
-                Principal Mobile & AI Solutions Engineer Blueprint
-              </p>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={modalBackdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          onClick={onClose}
+          className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-6"
+        >
+          <motion.div
+            variants={modalScaleVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+            className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden shadow-2xl"
           >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+            {/* Modal Top Bar */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
+                  <Code2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-extrabold text-base text-white">
+                      SIH 2026 Kotlin & Jetpack Compose Architecture
+                    </h3>
+                    <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                      Android Native • Problem #26090
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    Principal Mobile & AI Solutions Engineer Blueprint
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors tap-press"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
         {/* Two-pane layout: File explorer & Code Viewer */}
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
@@ -156,7 +172,9 @@ export const CodeInspectorModal: React.FC<CodeInspectorModalProps> = ({
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

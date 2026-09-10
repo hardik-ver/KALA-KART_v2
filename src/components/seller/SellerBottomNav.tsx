@@ -2,6 +2,7 @@ import React from "react";
 import { Home, Boxes, ClipboardList, User } from "lucide-react";
 import { LanguageCode } from "../../types/artisan";
 import type { AppScreen } from "../../App";
+import { motion } from "motion/react";
 
 interface SellerBottomNavProps {
   currentScreen: AppScreen;
@@ -80,42 +81,56 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
         const label = language === "hi" ? item.labelHi : item.labelEn;
 
         return (
-          <button
+          <motion.button
             key={item.id}
             type="button"
             onClick={() => onNavigate(item.screen)}
+            whileTap={{ scale: 0.92 }}
             aria-label={label}
             aria-current={active ? "page" : undefined}
-            className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
+            className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-colors tap-press ${
               active
                 ? "text-kk-primary font-bold"
                 : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
             }`}
           >
-            <div
-              className={`relative p-1 rounded-xl transition-all ${
-                active
-                  ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                  : "border border-transparent"
-              }`}
-            >
-              <Icon className="w-4 h-4 shrink-0" />
+            <div className="relative p-1 rounded-xl">
+              {active && (
+                <motion.div
+                  layoutId="seller-bottom-nav-active-pill"
+                  className="absolute inset-0 bg-kk-primary-soft/80 dark:bg-[#352C27] rounded-xl dark:border dark:border-[#4D3F37] dark:shadow-xs"
+                  transition={{ type: "spring", stiffness: 480, damping: 34 }}
+                />
+              )}
+              <motion.div
+                animate={{ scale: active ? 1.12 : 1, y: active ? -1 : 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                className="relative z-10"
+              >
+                <Icon className="w-4 h-4 shrink-0" />
+              </motion.div>
               {item.badgeCount !== undefined && item.badgeCount > 0 && (
-                <span
-                  className={`absolute -top-1 -right-1.5 text-[8px] font-bold px-1 min-w-[14px] h-3.5 flex items-center justify-center rounded-full leading-none shadow-2xs ${
+                <motion.span
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className={`absolute -top-1 -right-1.5 text-[8px] font-bold px-1 min-w-[14px] h-3.5 flex items-center justify-center rounded-full leading-none shadow-2xs z-20 ${
                     active
                       ? "bg-kk-primary text-white"
                       : "bg-stone-200 dark:bg-[#352C27] text-stone-700 dark:text-[#F6EFEA]"
                   }`}
                 >
                   {item.badgeCount > 99 ? "99+" : item.badgeCount}
-                </span>
+                </motion.span>
               )}
             </div>
-            <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
+            <motion.span
+              animate={{ scale: active ? 1.04 : 1 }}
+              transition={{ duration: 0.15 }}
+              className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5"
+            >
               {label}
-            </span>
-          </button>
+            </motion.span>
+          </motion.button>
         );
       })}
     </nav>

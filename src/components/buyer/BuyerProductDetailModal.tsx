@@ -15,6 +15,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { CatalogItem, LanguageCode } from "../../types/artisan";
+import { motion, AnimatePresence } from "motion/react";
+import { modalBackdropVariants, bottomSheetVariants } from "../../utils/motion";
 
 interface BuyerProductDetailModalProps {
   item: CatalogItem | null;
@@ -39,7 +41,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
   const [quantity, setQuantity] = useState<number>(1);
   const [addedAnimation, setAddedAnimation] = useState<boolean>(false);
 
-  if (!isOpen || !item) return null;
+  if (!item) return null;
 
   const currentImg = selectedImage || item.studioImage || item.originalImage;
   const title = language === "hi" ? item.titleHi : item.titleEn;
@@ -55,34 +57,51 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
   const imagesList = [item.studioImage, item.originalImage].filter(Boolean) as string[];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200">
-      <div className="bg-kk-surface text-kk-ink w-full sm:max-w-3xl max-h-screen sm:max-h-[90vh] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-kk-line">
-        {/* Top Floating Action Bar */}
-        <div className="sticky top-0 z-20 bg-kk-surface/90 backdrop-blur-md px-4 py-3 border-b border-kk-line flex items-center justify-between">
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex items-center gap-1.5 text-stone-600 hover:text-kk-ink text-sm font-semibold p-1.5 rounded-xl hover:bg-stone-100 transition-colors"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={modalBackdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          onClick={onClose}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs"
+        >
+          <motion.div
+            variants={bottomSheetVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+            className="bg-kk-surface text-kk-ink w-full sm:max-w-3xl max-h-[92vh] sm:max-h-[90vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-kk-line"
           >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="hidden sm:inline">{language === "hi" ? "वापस" : "Back"}</span>
-          </button>
+            {/* Top Floating Action Bar */}
+            <div className="sticky top-0 z-20 bg-kk-surface/90 backdrop-blur-md px-4 py-3 border-b border-kk-line flex items-center justify-between">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex items-center gap-1.5 text-stone-600 hover:text-kk-ink text-sm font-semibold p-1.5 rounded-xl hover:bg-stone-100 transition-colors tap-press"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="hidden sm:inline">{language === "hi" ? "वापस" : "Back"}</span>
+              </button>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onToggleWishlist(item.id)}
-              className={`p-2 rounded-full border transition-colors ${
-                isWishlisted
-                  ? "bg-kk-primary text-white border-kk-primary"
-                  : "bg-white text-stone-600 border-kk-line hover:text-kk-primary"
-              }`}
-              aria-label="Wishlist"
-            >
-              <Heart className={`w-4 h-4 ${isWishlisted ? "fill-current" : ""}`} />
-            </button>
-          </div>
-        </div>
+              <div className="flex items-center gap-2">
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.82 }}
+                  onClick={() => onToggleWishlist(item.id)}
+                  className={`p-2 rounded-full border transition-colors tap-pop ${
+                    isWishlisted
+                      ? "bg-kk-primary text-white border-kk-primary"
+                      : "bg-white text-stone-600 border-kk-line hover:text-kk-primary"
+                  }`}
+                  aria-label="Wishlist"
+                >
+                  <Heart className={`w-4 h-4 transition-transform ${isWishlisted ? "fill-current scale-110" : ""}`} />
+                </motion.button>
+              </div>
+            </div>
 
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
@@ -302,7 +321,9 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
             )}
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

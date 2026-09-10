@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, [data-theme="dark"], .dark *, [data-theme="dark"] *));
+
 :root, [data-theme="light"] {
   --background: #F9F2ED;
   --surface: #FFFFFF;
@@ -255,4 +257,81 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Onboarding screen key headline text colors */
+.text-onboarding-title {
+  color: #181210;
+}
+.dark .text-onboarding-title,
+[data-theme="dark"] .text-onboarding-title {
+  color: #FFFFFF;
+}
+
+/* ============================================================
+   NATIVE MOBILE MOTION & TOUCH INTERACTION OPTIMIZATIONS
+   ============================================================ */
+
+/* Eliminate mobile 300ms tap delay and blue tap highlight */
+html, body {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Smooth momentum scrolling with bounce prevention */
+.overflow-y-auto,
+.overflow-x-auto,
+[data-scroll-container] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Universal Native Mobile Tap Feedback */
+button, [role="button"], a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile Button Press Utility Classes */
+.tap-press {
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), opacity 120ms ease;
+  will-change: transform;
+}
+.tap-press:active {
+  transform: scale(0.96);
+}
+
+.tap-subtle {
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), opacity 120ms ease;
+  will-change: transform;
+}
+.tap-subtle:active {
+  transform: scale(0.98);
+}
+
+.tap-pop {
+  transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+.tap-pop:active {
+  transform: scale(0.88);
+}
+
+/* Hardware accelerated transitions */
+.gpu-accel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Accessibility: prefers-reduced-motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

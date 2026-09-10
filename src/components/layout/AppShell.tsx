@@ -1,4 +1,5 @@
 import React from "react";
+import { PWAInstallPrompt } from "../../pwa/PWAInstallPrompt";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ export const AppShell: React.FC<AppShellProps> = ({
         paddingRight: "env(safe-area-inset-right, 0px)",
       }}
     >
+      <PWAInstallPrompt />
       {children}
     </div>
   );
