@@ -1,94 +1,71 @@
 import React from "react";
-import { LayoutDashboard, Boxes, Plus, ClipboardList, User } from "lucide-react";
+import { Home, Compass, Flame, Heart, ShoppingBag, User } from "lucide-react";
 import { motion } from "motion/react";
 import { LanguageCode } from "../../types/artisan";
-import type { AppScreen } from "../../App";
+import { BuyerActiveTab } from "../../types/buyer";
 
-interface SellerBottomNavProps {
-  currentScreen: AppScreen;
-  onNavigate: (screen: AppScreen) => void;
+interface BuyerBottomDockProps {
+  activeTab: BuyerActiveTab;
+  onSelectTab: (tab: BuyerActiveTab) => void;
   language: LanguageCode;
-  inventoryCount?: number;
-  ordersCount?: number;
-  onStartSell?: () => void;
+  wishlistCount: number;
+  cartCount: number;
 }
 
-interface SellerNavItem {
-  id: "home" | "inventory" | "sell" | "orders" | "account";
-  screen?: AppScreen;
+interface NavItemConfig {
+  id: BuyerActiveTab;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   labelHi: string;
   labelEn: string;
-  badgeCount?: number;
-  isActive: boolean;
-  isAction?: boolean;
-  onClick?: () => void;
+  badge?: number;
+  showDotBadge?: boolean;
 }
 
-export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
-  currentScreen,
-  onNavigate,
+export const BuyerBottomDock: React.FC<BuyerBottomDockProps> = ({
+  activeTab,
+  onSelectTab,
   language,
-  inventoryCount = 0,
-  ordersCount = 0,
-  onStartSell,
+  wishlistCount,
+  cartCount,
 }) => {
-  // Completely hide the bottom navigation dock during the Add New Craft listing flow
-  if (currentScreen.startsWith("sell_")) {
-    return null;
-  }
-
-  const navItems: SellerNavItem[] = [
+  const navItems: NavItemConfig[] = [
     {
       id: "home",
-      screen: "dashboard",
-      icon: LayoutDashboard,
-      labelHi: "डैशबोर्ड",
+      icon: Home,
+      labelHi: "होम",
       labelEn: "Home",
-      isActive: currentScreen === "dashboard",
-      onClick: () => onNavigate("dashboard"),
     },
     {
-      id: "inventory",
-      screen: "inventory",
-      icon: Boxes,
-      labelHi: "इन्वेंट्री",
-      labelEn: "Products",
-      badgeCount: inventoryCount > 0 ? inventoryCount : undefined,
-      isActive: currentScreen === "inventory",
-      onClick: () => onNavigate("inventory"),
+      id: "explore",
+      icon: Compass,
+      labelHi: "खोजें",
+      labelEn: "Explore",
     },
-    ...(onStartSell
-      ? [
-          {
-            id: "sell" as const,
-            icon: Plus,
-            labelHi: "नया जोड़ें",
-            labelEn: "Add Craft",
-            isActive: false,
-            isAction: true,
-            onClick: onStartSell,
-          },
-        ]
-      : []),
     {
-      id: "orders",
-      screen: "orders",
-      icon: ClipboardList,
-      labelHi: "ऑर्डर",
-      labelEn: "Orders",
-      badgeCount: ordersCount > 0 ? ordersCount : undefined,
-      isActive: currentScreen === "orders",
-      onClick: () => onNavigate("orders"),
+      id: "trending",
+      icon: Flame,
+      labelHi: "ट्रेंडिंग",
+      labelEn: "Trending",
+    },
+    {
+      id: "wishlist",
+      icon: Heart,
+      labelHi: "विशलिस्ट",
+      labelEn: "Wishlist",
+      badge: wishlistCount > 0 ? wishlistCount : undefined,
+    },
+    {
+      id: "cart",
+      icon: ShoppingBag,
+      labelHi: "कार्ट",
+      labelEn: "Cart",
+      badge: cartCount > 0 ? cartCount : undefined,
     },
     {
       id: "account",
-      screen: "account",
       icon: User,
-      labelHi: "खाता",
-      labelEn: "Account",
-      isActive: currentScreen === "account",
-      onClick: () => onNavigate("account"),
+      labelHi: "प्रोफ़ाइल",
+      labelEn: "Profile",
     },
   ];
 
@@ -101,8 +78,8 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
     >
       <nav
         role="navigation"
-        aria-label="Seller Floating Dock"
-        className="pointer-events-auto relative w-full max-w-[390px] sm:max-w-[430px] mx-auto rounded-[26px] p-1.5 flex items-center justify-between gap-1 select-none transition-colors duration-200
+        aria-label="Buyer Floating Dock"
+        className="pointer-events-auto relative w-full max-w-[430px] sm:max-w-[460px] mx-auto rounded-[26px] p-1.5 flex items-center justify-between gap-1 select-none transition-colors duration-200
           /* Glass / Mirror Effect */
           bg-white/85 dark:bg-[#1C1512]/85
           backdrop-blur-xl
@@ -118,35 +95,14 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
 
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = item.isActive;
-          const isAction = item.isAction;
+          const isActive = activeTab === item.id;
           const label = language === "hi" ? item.labelHi : item.labelEn;
-
-          // Special styling for center "Add Craft" action button
-          if (isAction) {
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={item.onClick}
-                aria-label={label}
-                className="relative flex-1 min-w-0 py-1 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 active:scale-[0.94] hover:scale-[1.05] group outline-hidden"
-              >
-                <div className="relative p-1 rounded-xl bg-kk-primary text-white shadow-md shadow-kk-primary/30 flex items-center justify-center group-hover:bg-kk-primary-dark transition-colors">
-                  <Icon className="w-4 h-4" strokeWidth={2.6} />
-                </div>
-                <span className="text-[9.5px] leading-tight tracking-tight truncate max-w-full mt-1 font-bold text-kk-primary">
-                  {label}
-                </span>
-              </button>
-            );
-          }
 
           return (
             <button
               key={item.id}
               type="button"
-              onClick={item.onClick}
+              onClick={() => onSelectTab(item.id)}
               aria-label={label}
               aria-current={isActive ? "page" : undefined}
               className="relative flex-1 min-w-0 py-1.5 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 active:scale-[0.96] hover:scale-[1.03] group outline-hidden"
@@ -154,7 +110,7 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
               {/* Sliding Glass Highlight Indicator */}
               {isActive && (
                 <motion.div
-                  layoutId="sellerDockGlassHighlight"
+                  layoutId="buyerDockGlassHighlight"
                   className="absolute inset-0 rounded-2xl bg-kk-primary/12 dark:bg-kk-primary/22 border border-kk-primary/25 dark:border-kk-primary/35 shadow-[0_0_14px_rgba(184,99,50,0.18)] pointer-events-none"
                   transition={{
                     type: "spring",
@@ -187,8 +143,8 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
                     strokeWidth={isActive ? 2.3 : 1.85}
                   />
 
-                  {/* Badge Counter */}
-                  {item.badgeCount !== undefined && item.badgeCount > 0 && (
+                  {/* Badge Counter / Indicator */}
+                  {item.badge !== undefined && item.badge > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -196,10 +152,10 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
                       className={`absolute -top-1.5 -right-2 text-[8.5px] font-extrabold px-1 min-w-[14px] h-[14px] flex items-center justify-center rounded-full leading-none shadow-2xs border ${
                         isActive
                           ? "bg-kk-primary text-white border-white dark:border-[#241A15]"
-                          : "bg-stone-200 dark:bg-[#352C27] text-stone-700 dark:text-[#F6EFEA] border-white dark:border-[#241A15]"
+                          : "bg-kk-primary/90 text-white border-white dark:border-[#241A15]"
                       }`}
                     >
-                      {item.badgeCount > 99 ? "99+" : item.badgeCount}
+                      {item.badge > 99 ? "99+" : item.badge}
                     </motion.span>
                   )}
                 </motion.div>

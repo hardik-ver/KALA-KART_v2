@@ -26,6 +26,7 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   ArtisanUser, 
   CatalogItem, 
@@ -147,13 +148,18 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
               <MoreVertical className="w-4 h-4" />
             </button>
 
-            {showMenu && (
-              <div
-                className="absolute right-0 top-9 w-60 bg-white rounded-2xl border border-kk-line shadow-xl p-2.5 space-y-2 z-50 animate-in fade-in duration-150"
-                role="dialog"
-                aria-label="Seller Quick Menu"
-              >
-                <div className="flex items-center justify-between pb-2 border-b border-stone-100 px-1">
+            <AnimatePresence>
+              {showMenu && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  className="absolute right-0 top-9 w-60 bg-white rounded-2xl border border-kk-line shadow-xl p-2.5 space-y-2 z-50"
+                  role="dialog"
+                  aria-label="Seller Quick Menu"
+                >
+                  <div className="flex items-center justify-between pb-2 border-b border-stone-100 px-1">
                   <span className="text-xs font-bold text-kk-ink">
                     {language === "hi" ? "त्वरित विकल्प" : "Options & Settings"}
                   </span>
@@ -324,8 +330,9 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                     </button>
                   </div>
                 )}
-              </div>
+              </motion.div>
             )}
+          </AnimatePresence>
           </div>
         </div>
       </div>
@@ -335,15 +342,15 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
         <button
           type="button"
           onClick={handleTriggerSell}
-          className="relative overflow-hidden w-full p-5 sm:p-6 md:p-6.5 bg-gradient-to-br from-[#38281F] via-[#2A1D17] to-[#1C130E] dark:from-[#2C1F18] dark:via-[#201712] dark:to-[#150F0B] text-white rounded-2xl sm:rounded-3xl flex items-center justify-between shadow-xl shadow-[#1C130E]/25 dark:shadow-black/60 active:scale-[0.98] transition-all group border border-[#5C4334]/80 dark:border-[#4A3427] hover:border-[#C67C4E] dark:hover:border-[#D98A58]"
+          className="relative overflow-hidden w-full p-5 sm:p-6 md:p-6.5 bg-gradient-to-br from-[#38281F] via-[#2A1D17] to-[#1C130E] dark:from-[#2C1F18] dark:via-[#201712] dark:to-[#150F0B] text-white rounded-2xl sm:rounded-3xl flex items-center justify-between shadow-xl shadow-[#1C130E]/25 dark:shadow-black/60 active:scale-[0.98] transition-all group border border-[#5C4334]/80 dark:border-[#4A3427] hover:border-kk-primary"
         >
           {/* Subtle warm ember / ambient gradient accents preserving the dark brownish theme */}
-          <div className="absolute -top-16 -right-16 w-52 h-52 bg-gradient-to-br from-[#C67C4E]/30 via-[#A8623A]/15 to-transparent rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -top-16 -right-16 w-52 h-52 bg-gradient-to-br from-kk-primary/30 via-kk-primary-dark/15 to-transparent rounded-full blur-2xl pointer-events-none" />
           <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-[#8C5331]/20 via-transparent to-transparent rounded-full blur-xl pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" />
 
           <div className="relative z-10 flex items-center gap-4 sm:gap-5 text-left">
-            <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-gradient-to-br from-[#D98A58] to-[#A8623A] flex items-center justify-center text-white shadow-lg shadow-black/30 group-hover:scale-105 transition-transform flex-shrink-0 border border-white/20">
+            <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-gradient-to-br from-kk-primary to-kk-primary-dark flex items-center justify-center text-white shadow-lg shadow-black/30 group-hover:scale-105 transition-transform flex-shrink-0 border border-white/20">
               <PlusCircle className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
             <div>
@@ -358,7 +365,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
               </p>
             </div>
           </div>
-          <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 dark:bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-[#C67C4E] group-hover:border-[#C67C4E] transition-all flex-shrink-0 group-hover:translate-x-0.5">
+          <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 dark:bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-kk-primary group-hover:border-kk-primary transition-all flex-shrink-0 group-hover:translate-x-0.5">
             <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
         </button>
@@ -399,7 +406,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
             onClick={onViewInventory}
             role="button"
             tabIndex={0}
-            className="p-3 bg-white rounded-2xl border border-kk-line shadow-xs flex flex-col justify-between cursor-pointer hover:border-orange-300 transition-colors"
+            className="p-3 bg-white rounded-2xl border border-kk-line shadow-xs flex flex-col justify-between cursor-pointer hover:border-orange-300 active:scale-[0.97] transition-all"
           >
             <div className="flex items-center justify-between text-stone-500 mb-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider">
@@ -509,17 +516,14 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                 </div>
 
                 {/* Details */}
-                <div className="p-2.5 flex-1 flex flex-col justify-between">
+                <div className="p-2.5 flex-1 flex flex-col justify-between bg-white dark:bg-[#1E1713]">
                   <div>
-                    <h4 className="font-semibold text-xs text-kk-ink line-clamp-1 leading-snug">
+                    <h4 className="font-semibold text-xs text-kk-ink dark:text-[#F6EFEA] line-clamp-2 leading-snug min-h-[2rem]">
                       {language === "hi" ? item.titleHi : item.titleEn}
                     </h4>
-                    <p className="text-[10px] text-stone-500 font-normal line-clamp-1 mt-0.5">
-                      {item.specs.material}
-                    </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 mt-2 border-t border-stone-100 text-[10px] text-stone-500 font-medium">
+                  <div className="flex items-center justify-between pt-2 mt-1.5 border-t border-stone-100 dark:border-[#332A24] text-[10px] text-stone-500 dark:text-[#9A8B80] font-medium">
                     <span>{item.viewsCount || 120} {language === "hi" ? "व्यूज" : "views"}</span>
                     <span className="text-kk-primary font-semibold flex items-center gap-0.5">
                       {language === "hi" ? "विवरण" : "Details"} <ChevronRight className="w-3 h-3" />
@@ -570,43 +574,43 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
               onClick={() => setSelectedOrder(order)}
               role="button"
               tabIndex={0}
-              className="p-3 bg-white rounded-xl border border-kk-line shadow-xs flex items-center justify-between gap-3 cursor-pointer hover:border-stone-300 transition-colors"
+              className="p-3 bg-white dark:bg-[#1E1713] rounded-xl border border-kk-line dark:border-[#382B24] shadow-xs flex items-center justify-between gap-3 cursor-pointer hover:border-stone-300 dark:hover:border-[#523F34] active:scale-[0.98] transition-all"
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
                 <img
                   src={order.itemImage}
                   alt={order.itemTitle}
-                  className="w-11 h-11 rounded-lg object-cover flex-shrink-0 border border-kk-line"
+                  className="w-11 h-11 rounded-lg object-cover flex-shrink-0 border border-kk-line dark:border-[#382B24]"
                 />
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded uppercase bg-stone-100 text-stone-700">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-stone-100 dark:bg-[#2F2520] text-stone-700 dark:text-[#D1C5BD]">
                       {order.buyerType === "gem" ? "🏛️ GeM Govt" : order.buyerType === "b2b_wholesale" ? "🏢 Wholesale" : "🛍️ ONDC Retail"}
                     </span>
-                    <span className="text-[10px] font-mono text-stone-400">
+                    <span className="text-[10px] font-mono text-stone-400 dark:text-[#8C7E74]">
                       {order.orderNumber}
                     </span>
                   </div>
-                  <h4 className="text-xs font-semibold text-kk-ink truncate mt-0.5">
-                    {order.buyerName}
+                  <h4 className="text-xs font-semibold text-kk-ink dark:text-[#F6EFEA] line-clamp-2 leading-snug mt-1">
+                    {order.buyerName}{" "}
+                    <span className="font-bold text-kk-primary whitespace-nowrap">
+                      • {order.quantity}x
+                    </span>
                   </h4>
-                  <p className="text-[11px] text-stone-500 font-normal truncate">
-                    {order.quantity}x {order.itemTitle}
-                  </p>
                 </div>
               </div>
 
-              <div className="text-right flex-shrink-0">
-                <span className="text-xs sm:text-sm font-bold text-kk-ink block">
+              <div className="text-right flex-shrink-0 pl-2">
+                <span className="text-xs sm:text-sm font-bold text-kk-ink dark:text-[#F6EFEA] block">
                   ₹{order.amount.toLocaleString("en-IN")}
                 </span>
                 <span
-                  className={`text-[9px] font-semibold px-1.5 py-0.2 rounded-full inline-block mt-0.5 uppercase ${
+                  className={`text-[9px] font-semibold px-1.5 py-0.5 rounded-full inline-block mt-0.5 uppercase ${
                     order.status === "completed"
-                      ? "bg-emerald-100 text-emerald-800"
+                      ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300"
                       : order.status === "shipped"
-                      ? "bg-blue-100 text-blue-800"
-                      : "bg-amber-100 text-amber-800"
+                      ? "bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300"
+                      : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
                   }`}
                 >
                   {order.status}
@@ -618,67 +622,84 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
       </div>
 
       {/* Order Detail Modal */}
-      {selectedOrder && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-5 border border-kk-line shadow-2xl space-y-4 font-sans">
-            <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <div>
-                <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider">Order Details</span>
-                <h3 className="text-sm font-bold text-kk-ink">{selectedOrder.orderNumber}</h3>
+      <AnimatePresence>
+        {selectedOrder && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setSelectedOrder(null);
+            }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 12 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-white rounded-3xl max-w-sm w-full p-5 border border-kk-line shadow-2xl space-y-4 font-sans"
+            >
+              <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                <div>
+                  <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider">Order Details</span>
+                  <h3 className="text-sm font-bold text-kk-ink">{selectedOrder.orderNumber}</h3>
+                </div>
+                <span className="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                  {selectedOrder.status}
+                </span>
               </div>
-              <span className="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                {selectedOrder.status}
-              </span>
-            </div>
 
-            <div className="flex items-center gap-3">
-              <img
-                src={selectedOrder.itemImage}
-                alt={selectedOrder.itemTitle}
-                className="w-14 h-14 rounded-xl object-cover border border-kk-line"
-              />
-              <div>
-                <h4 className="font-semibold text-xs text-kk-ink">{selectedOrder.itemTitle}</h4>
-                <p className="text-xs text-stone-500 font-normal mt-0.5">Quantity: {selectedOrder.quantity} units</p>
-                <p className="text-sm font-bold text-kk-primary mt-1">₹{selectedOrder.amount.toLocaleString("en-IN")}</p>
+              <div className="flex items-center gap-3">
+                <img
+                  src={selectedOrder.itemImage}
+                  alt={selectedOrder.itemTitle}
+                  className="w-14 h-14 rounded-xl object-cover border border-kk-line"
+                />
+                <div>
+                  <h4 className="font-semibold text-xs text-kk-ink">{selectedOrder.itemTitle}</h4>
+                  <p className="text-xs text-stone-500 font-normal mt-0.5">Quantity: {selectedOrder.quantity} units</p>
+                  <p className="text-sm font-bold text-kk-primary mt-1">₹{selectedOrder.amount.toLocaleString("en-IN")}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="p-3 bg-stone-50 rounded-xl space-y-1 text-xs">
-              <div className="flex justify-between">
-                <span className="text-stone-500 font-normal">Buyer:</span>
-                <span className="font-semibold text-kk-ink">{selectedOrder.buyerName}</span>
+              <div className="p-3 bg-stone-50 rounded-xl space-y-1 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-stone-500 font-normal">Buyer:</span>
+                  <span className="font-semibold text-kk-ink">{selectedOrder.buyerName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-stone-500 font-normal">Channel:</span>
+                  <span className="font-semibold text-stone-700">{selectedOrder.buyerTypeLabel}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-stone-500 font-normal">Ordered:</span>
+                  <span className="font-medium text-stone-600">{selectedOrder.date}</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-stone-500 font-normal">Channel:</span>
-                <span className="font-semibold text-stone-700">{selectedOrder.buyerTypeLabel}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-stone-500 font-normal">Ordered:</span>
-                <span className="font-medium text-stone-600">{selectedOrder.date}</span>
-              </div>
-            </div>
 
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={handleTriggerSell}
-                className="flex-1 py-2.5 bg-kk-primary text-white rounded-xl text-xs font-semibold hover:bg-kk-primary-dark flex items-center justify-center gap-1.5"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>{language === "hi" ? "नया जोड़ें" : "Add Similar"}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedOrder(null)}
-                className="flex-1 py-2.5 bg-stone-100 text-stone-700 rounded-xl text-xs font-semibold hover:bg-stone-200"
-              >
-                {language === "hi" ? "बंद करें" : "Close"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={handleTriggerSell}
+                  className="flex-1 py-2.5 bg-kk-primary text-white rounded-xl text-xs font-semibold hover:bg-kk-primary-dark active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>{language === "hi" ? "नया जोड़ें" : "Add Similar"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedOrder(null)}
+                  className="flex-1 py-2.5 bg-stone-100 text-stone-700 rounded-xl text-xs font-semibold hover:bg-stone-200 active:scale-95 transition-all"
+                >
+                  {language === "hi" ? "बंद करें" : "Close"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

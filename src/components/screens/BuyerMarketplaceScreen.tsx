@@ -23,6 +23,7 @@ import {
   Moon,
 } from "lucide-react";
 import { CatalogItem, LanguageCode } from "../../types/artisan";
+import { motion, AnimatePresence } from "motion/react";
 import { BuyerActiveTab, BuyerCartItem } from "../../types/buyer";
 import { BUYER_CATALOG_EXPANDED } from "../../data/buyerData";
 import { useTheme } from "../../context/ThemeContext";
@@ -33,6 +34,7 @@ import { BuyerTrendingView } from "../buyer/BuyerTrendingView";
 import { BuyerWishlistView } from "../buyer/BuyerWishlistView";
 import { BuyerCartView } from "../buyer/BuyerCartView";
 import { BuyerProductDetailModal } from "../buyer/BuyerProductDetailModal";
+import { BuyerBottomDock } from "../buyer/BuyerBottomDock";
 
 interface BuyerMarketplaceScreenProps {
   catalogItems: CatalogItem[];
@@ -313,13 +315,18 @@ export const BuyerMarketplaceScreen: React.FC<BuyerMarketplaceScreenProps> = ({
       )}
 
       {/* Customer Account & Navigation Dropdown Popover */}
-      {showAccountModal && (
-        <div
-          className="absolute top-12 right-2 sm:right-4 z-50 w-64 max-w-[calc(100vw-16px)] bg-white rounded-2xl border border-kk-line shadow-2xl p-3 space-y-2.5 animate-in fade-in duration-150"
-          role="dialog"
-          aria-label="Buyer Menu"
-        >
-          <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+      <AnimatePresence>
+        {showAccountModal && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -6 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -6 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute top-12 right-2 sm:right-4 z-50 w-64 max-w-[calc(100vw-16px)] bg-white rounded-2xl border border-kk-line shadow-2xl p-3 space-y-2.5"
+            role="dialog"
+            aria-label="Buyer Menu"
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-kk-primary-soft text-kk-primary flex items-center justify-center font-bold text-xs">
                 AD
@@ -515,78 +522,125 @@ export const BuyerMarketplaceScreen: React.FC<BuyerMarketplaceScreenProps> = ({
               </button>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
+    </AnimatePresence>
 
       {/* Main Viewport Content with Scroll */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-5 py-3 sm:py-4 pb-24 md:pb-8 w-full max-w-7xl mx-auto box-border">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-5 py-3 sm:py-4 pb-28 w-full max-w-7xl mx-auto box-border">
         {activeTab === "home" && (
-          <BuyerHomeView
-            items={allProducts}
-            language={language}
-            wishlistIds={wishlistIds}
-            onToggleWishlist={handleToggleWishlist}
-            onSelectItem={handleSelectItem}
-            onSelectCategory={handleSelectCategory}
-            onNavigateTab={(tab) => setActiveTab(tab)}
-          />
+          <motion.div
+            key="buyer-home"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="w-full"
+          >
+            <BuyerHomeView
+              items={allProducts}
+              language={language}
+              wishlistIds={wishlistIds}
+              onToggleWishlist={handleToggleWishlist}
+              onSelectItem={handleSelectItem}
+              onSelectCategory={handleSelectCategory}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+            />
+          </motion.div>
         )}
 
         {activeTab === "explore" && (
-          <BuyerSearchView
-            items={allProducts}
-            language={language}
-            wishlistIds={wishlistIds}
-            initialCategory={searchCategory}
-            initialQuery={headerSearchQuery}
-            onToggleWishlist={handleToggleWishlist}
-            onSelectItem={handleSelectItem}
-          />
+          <motion.div
+            key="buyer-explore"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="w-full"
+          >
+            <BuyerSearchView
+              items={allProducts}
+              language={language}
+              wishlistIds={wishlistIds}
+              initialCategory={searchCategory}
+              initialQuery={headerSearchQuery}
+              onToggleWishlist={handleToggleWishlist}
+              onSelectItem={handleSelectItem}
+            />
+          </motion.div>
         )}
 
         {activeTab === "trending" && (
-          <BuyerTrendingView
-            items={allProducts}
-            language={language}
-            wishlistIds={wishlistIds}
-            onToggleWishlist={handleToggleWishlist}
-            onSelectItem={handleSelectItem}
-            onExploreAll={() => setActiveTab("explore")}
-          />
+          <motion.div
+            key="buyer-trending"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="w-full"
+          >
+            <BuyerTrendingView
+              items={allProducts}
+              language={language}
+              wishlistIds={wishlistIds}
+              onToggleWishlist={handleToggleWishlist}
+              onSelectItem={handleSelectItem}
+              onExploreAll={() => setActiveTab("explore")}
+            />
+          </motion.div>
         )}
 
         {activeTab === "wishlist" && (
-          <BuyerWishlistView
-            items={allProducts}
-            language={language}
-            wishlistIds={wishlistIds}
-            onToggleWishlist={handleToggleWishlist}
-            onSelectItem={handleSelectItem}
-            onExplore={() => setActiveTab("explore")}
-          />
+          <motion.div
+            key="buyer-wishlist"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="w-full"
+          >
+            <BuyerWishlistView
+              items={allProducts}
+              language={language}
+              wishlistIds={wishlistIds}
+              onToggleWishlist={handleToggleWishlist}
+              onSelectItem={handleSelectItem}
+              onExplore={() => setActiveTab("explore")}
+            />
+          </motion.div>
         )}
 
         {activeTab === "cart" && (
-          <BuyerCartView
-            cart={cart}
-            language={language}
-            onUpdateQuantity={(id, qty) => {
-              if (qty <= 0) {
-                setCart((prev) => prev.filter((it) => it.id !== id));
-              } else {
-                setCart((prev) =>
-                  prev.map((it) => (it.id === id ? { ...it, quantity: qty } : it))
-                );
-              }
-            }}
-            onRemoveItem={(id) => setCart((prev) => prev.filter((it) => it.id !== id))}
-            onClearCart={() => setCart([])}
-            onExplore={() => setActiveTab("explore")}
-          />
+          <motion.div
+            key="buyer-cart"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="w-full"
+          >
+            <BuyerCartView
+              cart={cart}
+              language={language}
+              onUpdateQuantity={(id, qty) => {
+                if (qty <= 0) {
+                  setCart((prev) => prev.filter((it) => it.id !== id));
+                } else {
+                  setCart((prev) =>
+                    prev.map((it) => (it.id === id ? { ...it, quantity: qty } : it))
+                  );
+                }
+              }}
+              onRemoveItem={(id) => setCart((prev) => prev.filter((it) => it.id !== id))}
+              onClearCart={() => setCart([])}
+              onExplore={() => setActiveTab("explore")}
+            />
+          </motion.div>
         )}
 
         {activeTab === "account" && (
-          <div className="max-w-md mx-auto space-y-4 py-1 animate-in fade-in duration-200">
+          <motion.div
+            key="buyer-account"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
+            className="max-w-md mx-auto space-y-4 py-1"
+          >
             {/* Customer Profile Card */}
             <div className="bg-white p-4 sm:p-5 rounded-2xl border border-kk-line shadow-2xs space-y-3">
               <div className="flex items-center gap-3">
@@ -754,147 +808,23 @@ export const BuyerMarketplaceScreen: React.FC<BuyerMarketplaceScreenProps> = ({
                 <span>{language === "hi" ? "लॉगआउट / मुख्य स्क्रीन" : "Sign Out / Exit"}</span>
               </button>
             )}
-          </div>
+          </motion.div>
         )}
       </main>
 
-      {/* Native Mobile Bottom Navigation Bar (Home, Explore, Trending, Wishlist, Profile) */}
-      <nav
-        role="navigation"
-        aria-label="Buyer Mobile Navigation"
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#1C1614]/95 backdrop-blur-md rounded-t-2xl border-t border-kk-line dark:border-[#382E28] shadow-[0_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.5)] px-1.5 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] flex items-center justify-around select-none w-full max-w-full box-border"
-      >
-        {/* Home */}
-        <button
-          type="button"
-          onClick={() => setActiveTab("home")}
-          aria-label="Home"
-          className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
-            activeTab === "home"
-              ? "text-kk-primary font-bold"
-              : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
-          }`}
-        >
-          <div
-            className={`p-1 rounded-xl transition-all ${
-              activeTab === "home"
-                ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                : "border border-transparent"
-            }`}
-          >
-            <Home className="w-4 h-4 shrink-0" />
-          </div>
-          <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
-            {language === "hi" ? "होम" : "Home"}
-          </span>
-        </button>
-
-        {/* Explore */}
-        <button
-          type="button"
-          onClick={() => {
+      {/* Native Floating Glass Navigation Dock (Home, Explore, Trending, Wishlist, Cart, Profile) */}
+      <BuyerBottomDock
+        activeTab={activeTab}
+        onSelectTab={(tab) => {
+          if (tab === "explore") {
             setSearchCategory("all");
-            setActiveTab("explore");
-          }}
-          aria-label="Explore"
-          className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
-            activeTab === "explore"
-              ? "text-kk-primary font-bold"
-              : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
-          }`}
-        >
-          <div
-            className={`p-1 rounded-xl transition-all ${
-              activeTab === "explore"
-                ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                : "border border-transparent"
-            }`}
-          >
-            <Compass className="w-4 h-4 shrink-0" />
-          </div>
-          <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
-            {language === "hi" ? "खोजें" : "Explore"}
-          </span>
-        </button>
-
-        {/* Trending */}
-        <button
-          type="button"
-          onClick={() => setActiveTab("trending")}
-          aria-label="Trending"
-          className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
-            activeTab === "trending"
-              ? "text-kk-primary font-bold"
-              : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
-          }`}
-        >
-          <div
-            className={`p-1 rounded-xl transition-all ${
-              activeTab === "trending"
-                ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                : "border border-transparent"
-            }`}
-          >
-            <Flame className="w-4 h-4 shrink-0" />
-          </div>
-          <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
-            {language === "hi" ? "ट्रेंडिंग" : "Trending"}
-          </span>
-        </button>
-
-        {/* Wishlist */}
-        <button
-          type="button"
-          onClick={() => setActiveTab("wishlist")}
-          aria-label="Wishlist"
-          className={`relative flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
-            activeTab === "wishlist"
-              ? "text-kk-primary font-bold"
-              : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
-          }`}
-        >
-          <div
-            className={`relative p-1 rounded-xl transition-all ${
-              activeTab === "wishlist"
-                ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                : "border border-transparent"
-            }`}
-          >
-            <Heart className="w-4 h-4 shrink-0" />
-            {wishlistIds.length > 0 && (
-              <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-kk-primary" />
-            )}
-          </div>
-          <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
-            {language === "hi" ? "विशलिस्ट" : "Wishlist"}
-          </span>
-        </button>
-
-        {/* Profile (Account) */}
-        <button
-          type="button"
-          onClick={() => setActiveTab("account")}
-          aria-label="Profile"
-          className={`flex-1 min-w-0 py-1 px-1 rounded-xl flex flex-col items-center justify-center transition-all ${
-            activeTab === "account"
-              ? "text-kk-primary font-bold"
-              : "text-stone-500 hover:text-kk-ink dark:text-[#877C73] dark:hover:text-[#F6EFEA] font-medium"
-          }`}
-        >
-          <div
-            className={`p-1 rounded-xl transition-all ${
-              activeTab === "account"
-                ? "bg-kk-primary-soft/70 dark:bg-[#352C27] dark:border dark:border-[#4D3F37] dark:shadow-xs"
-                : "border border-transparent"
-            }`}
-          >
-            <User className="w-4 h-4 shrink-0" />
-          </div>
-          <span className="text-[10px] leading-tight tracking-tight truncate max-w-full mt-0.5">
-            {language === "hi" ? "प्रोफाइल" : "Profile"}
-          </span>
-        </button>
-      </nav>
+          }
+          setActiveTab(tab);
+        }}
+        language={language}
+        wishlistCount={wishlistIds.length}
+        cartCount={totalCartCount}
+      />
 
       {/* Product Detail Modal */}
       <BuyerProductDetailModal

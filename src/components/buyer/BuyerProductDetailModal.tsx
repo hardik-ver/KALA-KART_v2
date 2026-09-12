@@ -14,9 +14,8 @@ import {
   Feather,
   ChevronRight,
 } from "lucide-react";
-import { CatalogItem, LanguageCode } from "../../types/artisan";
 import { motion, AnimatePresence } from "motion/react";
-import { modalBackdropVariants, bottomSheetVariants } from "../../utils/motion";
+import { CatalogItem, LanguageCode } from "../../types/artisan";
 
 interface BuyerProductDetailModalProps {
   item: CatalogItem | null;
@@ -41,7 +40,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
   const [quantity, setQuantity] = useState<number>(1);
   const [addedAnimation, setAddedAnimation] = useState<boolean>(false);
 
-  if (!item) return null;
+  if (!isOpen || !item) return null;
 
   const currentImg = selectedImage || item.studioImage || item.originalImage;
   const title = language === "hi" ? item.titleHi : item.titleEn;
@@ -58,48 +57,48 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && item && (
         <motion.div
-          variants={modalBackdropVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={onClose}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs select-none"
         >
           <motion.div
-            variants={bottomSheetVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onClick={(e) => e.stopPropagation()}
-            className="bg-kk-surface text-kk-ink w-full sm:max-w-3xl max-h-[92vh] sm:max-h-[90vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-kk-line"
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-kk-surface text-kk-ink w-full sm:max-w-3xl max-h-screen sm:max-h-[90vh] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-kk-line"
           >
             {/* Top Floating Action Bar */}
             <div className="sticky top-0 z-20 bg-kk-surface/90 backdrop-blur-md px-4 py-3 border-b border-kk-line flex items-center justify-between">
               <button
                 type="button"
                 onClick={onClose}
-                className="flex items-center gap-1.5 text-stone-600 hover:text-kk-ink text-sm font-semibold p-1.5 rounded-xl hover:bg-stone-100 transition-colors tap-press"
+                className="flex items-center gap-1.5 text-stone-600 hover:text-kk-ink text-sm font-semibold p-1.5 rounded-xl hover:bg-stone-100 active:scale-95 transition-all"
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="hidden sm:inline">{language === "hi" ? "वापस" : "Back"}</span>
               </button>
 
               <div className="flex items-center gap-2">
-                <motion.button
+                <button
                   type="button"
-                  whileTap={{ scale: 0.82 }}
                   onClick={() => onToggleWishlist(item.id)}
-                  className={`p-2 rounded-full border transition-colors tap-pop ${
+                  className={`p-2 rounded-full border active:scale-75 transition-all duration-150 ${
                     isWishlisted
                       ? "bg-kk-primary text-white border-kk-primary"
                       : "bg-white text-stone-600 border-kk-line hover:text-kk-primary"
                   }`}
                   aria-label="Wishlist"
                 >
-                  <Heart className={`w-4 h-4 transition-transform ${isWishlisted ? "fill-current scale-110" : ""}`} />
-                </motion.button>
+                  <Heart className={`w-4 h-4 transition-transform duration-200 ${isWishlisted ? "fill-current scale-110" : ""}`} />
+                </button>
               </div>
             </div>
 
@@ -280,7 +279,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="px-2.5 sm:px-3 py-2 text-stone-700 hover:bg-stone-200 font-bold transition-colors text-sm"
+              className="px-2.5 sm:px-3 py-2 text-stone-700 hover:bg-stone-200 font-bold transition-all active:scale-90 text-sm"
             >
               -
             </button>
@@ -290,7 +289,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              className="px-2.5 sm:px-3 py-2 text-stone-700 hover:bg-stone-200 font-bold transition-colors text-sm"
+              className="px-2.5 sm:px-3 py-2 text-stone-700 hover:bg-stone-200 font-bold transition-all active:scale-90 text-sm"
             >
               +
             </button>
@@ -300,7 +299,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
           <button
             type="button"
             onClick={handleAdd}
-            className={`flex-1 min-w-0 py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-md active:scale-98 ${
+            className={`flex-1 min-w-0 py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-md active:scale-[0.98] ${
               addedAnimation
                 ? "bg-emerald-600 text-white"
                 : "bg-kk-primary hover:bg-kk-primary-dark text-white shadow-kk-ink/20"

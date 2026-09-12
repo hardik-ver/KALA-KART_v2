@@ -34,7 +34,7 @@ export const BuyerProductCard: React.FC<BuyerProductCardProps> = ({
           onClick(item);
         }
       }}
-      className="group bg-white rounded-2xl border border-kk-line/90 shadow-2xs hover:shadow-md hover:border-stone-300 transition-all duration-200 overflow-hidden flex flex-col justify-between text-left cursor-pointer active:scale-[0.99] focus:outline-hidden focus:ring-2 focus:ring-kk-primary/40 h-full w-full max-w-full box-border select-none"
+      className="group bg-white rounded-2xl border border-kk-line/90 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-stone-300 transition-all duration-200 overflow-hidden flex flex-col justify-between text-left cursor-pointer active:scale-[0.98] focus:outline-hidden focus:ring-2 focus:ring-kk-primary/40 h-full w-full max-w-full box-border select-none"
     >
       {/* Product Image Stage */}
       <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-stone-100">
@@ -42,7 +42,7 @@ export const BuyerProductCard: React.FC<BuyerProductCardProps> = ({
           src={item.studioImage || item.originalImage}
           alt={title}
           loading="lazy"
-          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-300 ease-out"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300 ease-out"
         />
 
         {/* Handmade / GI Badge */}
@@ -58,14 +58,14 @@ export const BuyerProductCard: React.FC<BuyerProductCardProps> = ({
           type="button"
           onClick={(e) => onToggleWishlist(e, item.id)}
           aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className={`absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-colors shadow-xs backdrop-blur-xs z-10 ${
+          className={`absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-150 active:scale-75 shadow-xs backdrop-blur-xs z-10 ${
             isWishlisted
               ? "bg-kk-primary text-white"
               : "bg-white/90 dark:bg-[#231D1A]/90 text-stone-700 dark:text-[#B3A79E] hover:text-kk-primary dark:hover:text-kk-primary hover:bg-white dark:hover:bg-[#2E2622]"
           }`}
         >
           <Heart
-            className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform ${isWishlisted ? "fill-current scale-110" : ""}`}
+            className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 ${isWishlisted ? "fill-current scale-110" : ""}`}
           />
         </button>
       </div>
@@ -113,7 +113,7 @@ export const BuyerProductCard: React.FC<BuyerProductCardProps> = ({
             )}
           </div>
 
-          <span className="text-[10px] sm:text-[11px] font-semibold text-kk-primary bg-kk-primary-soft hover:bg-kk-primary-soft/80 px-2 sm:px-2.5 py-1 rounded-lg transition-colors shrink-0 whitespace-nowrap">
+          <span className="text-[10px] sm:text-[11px] font-semibold text-kk-primary bg-kk-primary-soft group-hover:bg-kk-primary group-hover:text-white active:scale-95 px-2 sm:px-2.5 py-1 rounded-lg transition-all duration-150 shrink-0 whitespace-nowrap shadow-2xs">
             {language === "hi" ? "देखें" : "View"}
           </span>
         </div>

@@ -13,16 +13,16 @@
   --text-primary: #313131;
   --text-secondary: #6E655F;
   --text-tertiary: #9E948C;
-  --accent: #C67C4E;
-  --accent-hover: #A8623A;
-  --accent-soft: #EDD6C8;
+  --accent: #B86332;
+  --accent-hover: #9F4C1F;
+  --accent-soft: #EAD2C4;
   --input-background: #F5F5F4;
   --navigation-background: rgba(255, 255, 255, 0.95);
   --shadow-color: rgba(0, 0, 0, 0.06);
 
-  --color-kk-primary: #C67C4E;
-  --color-kk-primary-dark: #A8623A;
-  --color-kk-primary-soft: #EDD6C8;
+  --color-kk-primary: #B86332;
+  --color-kk-primary-dark: #9F4C1F;
+  --color-kk-primary-soft: #EAD2C4;
   --color-kk-ink: #313131;
   --color-kk-ink-soft: #4A4038;
   --color-kk-line: #E3E3E3;
@@ -40,16 +40,16 @@
   --text-primary: #F6EFEA;
   --text-secondary: #B3A79E;
   --text-tertiary: #877C73;
-  --accent: #D98A58;
-  --accent-hover: #BD6E3E;
-  --accent-soft: #423126;
+  --accent: #B86332;
+  --accent-hover: #9F4C1F;
+  --accent-soft: #3D261A;
   --input-background: #2A221E;
   --navigation-background: rgba(35, 29, 26, 0.95);
   --shadow-color: rgba(0, 0, 0, 0.5);
 
-  --color-kk-primary: #D98A58;
-  --color-kk-primary-dark: #BD6E3E;
-  --color-kk-primary-soft: #423126;
+  --color-kk-primary: #B86332;
+  --color-kk-primary-dark: #9F4C1F;
+  --color-kk-primary-soft: #3D261A;
   --color-kk-ink: #F6EFEA;
   --color-kk-ink-soft: #B3A79E;
   --color-kk-line: #3D332C;
@@ -268,70 +268,20 @@ body {
   color: #FFFFFF;
 }
 
-/* ============================================================
-   NATIVE MOBILE MOTION & TOUCH INTERACTION OPTIMIZATIONS
-   ============================================================ */
-
-/* Eliminate mobile 300ms tap delay and blue tap highlight */
-html, body {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-
-/* Smooth momentum scrolling with bounce prevention */
-.overflow-y-auto,
-.overflow-x-auto,
-[data-scroll-container] {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-}
-
-/* Universal Native Mobile Tap Feedback */
-button, [role="button"], a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Mobile Button Press Utility Classes */
-.tap-press {
-  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), opacity 120ms ease;
-  will-change: transform;
-}
-.tap-press:active {
-  transform: scale(0.96);
-}
-
-.tap-subtle {
-  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), opacity 120ms ease;
-  will-change: transform;
-}
-.tap-subtle:active {
-  transform: scale(0.98);
-}
-
-.tap-pop {
-  transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
-}
-.tap-pop:active {
-  transform: scale(0.88);
-}
-
-/* Hardware accelerated transitions */
-.gpu-accel {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* Accessibility: prefers-reduced-motion compliance */
+/* Accessibility: Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Native tactile tap feedback */
+.tap-bounce {
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1);
+}
+.tap-bounce:active {
+  transform: scale(0.96);
 }
