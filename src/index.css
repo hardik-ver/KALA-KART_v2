@@ -27,6 +27,44 @@
   --color-kk-ink-soft: #4A4038;
   --color-kk-line: #E3E3E3;
   --color-kk-surface: #F9F2ED;
+
+  /* Centralized Hover Interaction System Tokens */
+  --kk-hover-duration: 200ms;
+  --kk-hover-duration-fast: 160ms;
+  --kk-hover-duration-img: 280ms;
+  --kk-hover-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --kk-hover-ease-out: ease-out;
+
+  /* Card Interaction */
+  --kk-card-lift: -3px;
+  --kk-card-scale: 1.015;
+  --kk-card-hover-shadow: 0 10px 25px -4px rgba(40, 25, 18, 0.11), 0 3px 8px -2px rgba(0, 0, 0, 0.04);
+  --kk-card-hover-border: #D5CCC4;
+
+  /* Button Interaction */
+  --kk-btn-lift: -1.5px;
+  --kk-btn-scale: 1.01;
+  --kk-btn-active-scale: 0.985;
+  --kk-btn-hover-shadow: 0 5px 15px -2px rgba(184, 99, 50, 0.26);
+
+  /* Pill / Tab Interaction */
+  --kk-pill-lift: -1px;
+  --kk-pill-scale: 1.012;
+  --kk-pill-active-scale: 0.98;
+
+  /* Row Interaction */
+  --kk-row-lift: -1.5px;
+  --kk-row-hover-bg: rgba(40, 25, 18, 0.025);
+  --kk-row-hover-shadow: 0 4px 14px -2px rgba(40, 25, 18, 0.06);
+
+  /* Icon Button Interaction */
+  --kk-icon-scale: 1.05;
+  --kk-icon-lift: -1px;
+  --kk-icon-active-scale: 0.94;
+
+  /* Nav Dock Item Interaction */
+  --kk-nav-scale: 1.03;
+  --kk-nav-lift: -1px;
 }
 
 .dark, [data-theme="dark"] {
@@ -54,6 +92,13 @@
   --color-kk-ink-soft: #B3A79E;
   --color-kk-line: #3D332C;
   --color-kk-surface: #181412;
+
+  /* Dark Mode specific hover tokens (warm terracotta/brown palette) */
+  --kk-card-hover-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65), 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --kk-card-hover-border: #524339;
+  --kk-btn-hover-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.6);
+  --kk-row-hover-bg: rgba(255, 255, 255, 0.035);
+  --kk-row-hover-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.5);
 }
 
 @theme {
@@ -285,3 +330,177 @@ body {
 .tap-bounce:active {
   transform: scale(0.96);
 }
+
+/* ==========================================================================
+   GLOBAL, PERFORMANCE-FIRST HOVER INTERACTION SYSTEM
+   Tactile, smooth, desktop-first micro-interactions using hardware-accelerated
+   transforms and shadows adhering to the Kala-Kart design tokens.
+   ========================================================================== */
+
+/* 1. Base transition specifications for interactive components */
+.interactive-hover-card,
+.kk-card-interactive,
+.interactive-hover-btn,
+.kk-btn-interactive,
+.interactive-hover-pill,
+.kk-pill-interactive,
+.interactive-hover-row,
+.kk-row-interactive,
+.interactive-hover-nav,
+.kk-icon-btn-interactive,
+.kk-nav-item-interactive {
+  transition-property: transform, box-shadow, border-color, background-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+  backface-visibility: hidden;
+}
+
+/* Image transitions inside interactive cards */
+.interactive-hover-card img,
+.kk-card-interactive img,
+.kk-card-img {
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Desktop & Mouse Pointers Only (Guarantees 0 sticky states on mobile/touch screens) */
+@media (hover: hover) and (pointer: fine) {
+  /* Cards & Product Listings */
+  .interactive-hover-card:hover,
+  .kk-card-interactive:hover {
+    transform: translateY(-3px) scale(1.01) !important;
+    box-shadow: 0 10px 25px -4px rgba(40, 25, 18, 0.12), 0 3px 8px -2px rgba(0, 0, 0, 0.05) !important;
+    border-color: #D5CCC4 !important;
+  }
+
+  .interactive-hover-card:active,
+  .kk-card-interactive:active {
+    transform: translateY(0) scale(0.99) !important;
+    transition-duration: 90ms;
+  }
+
+  /* Product images inside hovered card: subtle 1.03 scale */
+  .interactive-hover-card:hover img:not([aria-hidden="true"]):not(.no-zoom),
+  .kk-card-interactive:hover img:not([aria-hidden="true"]):not(.no-zoom),
+  .interactive-hover-card:hover .kk-card-img,
+  .kk-card-interactive:hover .kk-card-img {
+    transform: scale(1.03) !important;
+  }
+
+  /* Buttons */
+  .interactive-hover-btn:hover,
+  .kk-btn-interactive:hover {
+    transform: translateY(-1.5px) scale(1.01) !important;
+    box-shadow: 0 5px 15px -2px rgba(184, 99, 50, 0.28) !important;
+  }
+
+  .interactive-hover-btn:active,
+  .kk-btn-interactive:active {
+    transform: translateY(0) scale(0.985) !important;
+    transition-duration: 80ms;
+  }
+
+  /* Navigation items & icon buttons (3-dot, close, back, dock) */
+  .interactive-hover-nav:hover,
+  .kk-nav-item-interactive:hover,
+  .kk-icon-btn-interactive:hover {
+    transform: translateY(-1.5px) scale(1.04) !important;
+  }
+
+  .interactive-hover-nav:active,
+  .kk-nav-item-interactive:active,
+  .kk-icon-btn-interactive:active {
+    transform: translateY(0) scale(0.96) !important;
+    transition-duration: 80ms;
+  }
+
+  /* Pills / Tabs / Filter Chips */
+  .interactive-hover-pill:hover,
+  .kk-pill-interactive:hover {
+    transform: translateY(-1px) scale(1.015) !important;
+  }
+
+  .interactive-hover-pill:active,
+  .kk-pill-interactive:active {
+    transform: translateY(0) scale(0.98) !important;
+    transition-duration: 80ms;
+  }
+
+  /* Rows (orders, settings, demands) */
+  .interactive-hover-row:hover,
+  .kk-row-interactive:hover {
+    transform: translateY(-2px) scale(1.005) !important;
+    box-shadow: 0 6px 18px -2px rgba(40, 25, 18, 0.09) !important;
+    border-color: #D5CCC4 !important;
+  }
+
+  .interactive-hover-row:active,
+  .kk-row-interactive:active {
+    transform: translateY(0) scale(0.99) !important;
+    transition-duration: 90ms;
+  }
+
+  /* Stable Inputs: zero movement/scale, subtle hover border */
+  input:not(:focus):not(:disabled):hover,
+  textarea:not(:focus):not(:disabled):hover,
+  select:not(:focus):not(:disabled):hover {
+    border-color: #C8BCB3;
+  }
+
+  .dark input:not(:focus):not(:disabled):hover,
+  .dark textarea:not(:focus):not(:disabled):hover,
+  .dark select:not(:focus):not(:disabled):hover {
+    border-color: #52443B;
+  }
+}
+
+/* Dark mode specific hover styling */
+.dark .interactive-hover-card:hover,
+.dark .kk-card-interactive:hover,
+[data-theme="dark"] .interactive-hover-card:hover,
+[data-theme="dark"] .kk-card-interactive:hover {
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65), 0 4px 12px -2px rgba(0, 0, 0, 0.45) !important;
+  border-color: #524339 !important;
+}
+
+.dark .interactive-hover-btn:hover,
+.dark .kk-btn-interactive:hover,
+[data-theme="dark"] .interactive-hover-btn:hover,
+[data-theme="dark"] .kk-btn-interactive:hover {
+  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark .interactive-hover-row:hover,
+.dark .kk-row-interactive:hover,
+[data-theme="dark"] .interactive-hover-row:hover,
+[data-theme="dark"] .kk-row-interactive:hover {
+  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.55) !important;
+  border-color: #524339 !important;
+}
+
+/* Ensure inputs, textareas, and selects never transform or scale */
+input, textarea, select {
+  transform: none !important;
+}
+
+/* Accessibility: Respect Reduced Motion (Zero transform/scale) */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-hover-card,
+  .kk-card-interactive,
+  .interactive-hover-btn,
+  .kk-btn-interactive,
+  .interactive-hover-pill,
+  .kk-pill-interactive,
+  .interactive-hover-row,
+  .kk-row-interactive,
+  .interactive-hover-nav,
+  .kk-icon-btn-interactive,
+  .kk-nav-item-interactive,
+  button,
+  [role="button"],
+  img {
+    transform: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

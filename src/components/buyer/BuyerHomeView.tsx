@@ -13,6 +13,7 @@ import {
 import { CatalogItem, LanguageCode } from "../../types/artisan";
 import { BUYER_CATEGORIES } from "../../data/buyerData";
 import { BuyerProductCard } from "./BuyerProductCard";
+import { PRODUCT_IMAGES } from "../../data/productImages";
 
 interface BuyerHomeViewProps {
   items: CatalogItem[];
@@ -44,47 +45,53 @@ export const BuyerHomeView: React.FC<BuyerHomeViewProps> = ({
 
   return (
     <div className="space-y-6 pb-12">
-      {/* 2. Elegant Hero / Discovery Area (Minimal, artisan-focused, not oversized) */}
-      <div className="bg-gradient-to-br from-kk-ink via-kk-ink-soft to-kk-ink dark:from-[#251E1A] dark:via-[#2E2622] dark:to-[#251E1A] text-white p-4 sm:p-6 md:p-7 rounded-2xl sm:rounded-3xl relative overflow-hidden shadow-xl border border-kk-ink-soft dark:border-[#3D332C] w-full max-w-full box-border">
-        <div className="relative z-10 max-w-md sm:max-w-lg space-y-2.5">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-kk-primary/20 border border-kk-primary/40 text-kk-primary text-[10px] font-bold uppercase tracking-wider">
-            <Sparkles className="w-3 h-3 text-kk-primary shrink-0" />
-            <span className="truncate">{language === "hi" ? "सीधा भारतीय कारीगरों से" : "Direct from Indian Artisans"}</span>
+      {/* 2. Compact Editorial Hero Banner (Kala-Kart Authentic Handicraft) */}
+      <div className="bg-[#653E2C] dark:bg-[#231C18] border border-[#7C4E37] dark:border-[#3A2F27] p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl relative overflow-hidden shadow-xs hover:shadow-sm transition-all w-full max-w-full box-border">
+        {/* Subtle warm terracotta background vignette - Dark Mode only to preserve clean solid color in Light Mode */}
+        <div className="hidden dark:block absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-kk-primary/15 blur-2xl pointer-events-none" />
+
+        <div className="relative z-10 flex items-center justify-between gap-3 sm:gap-6">
+          {/* Text content */}
+          <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/15 dark:bg-kk-primary/20 text-[#F5EBE4] dark:text-kk-primary text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E88E5E] dark:bg-kk-primary shrink-0" />
+              <span className="truncate">{language === "hi" ? "भारत में हस्तनिर्मित" : "HANDCRAFTED IN INDIA"}</span>
+            </div>
+
+            <h2 className="text-base sm:text-lg md:text-xl font-extrabold tracking-tight text-white dark:text-[#F6EFEA] leading-snug">
+              {language === "hi"
+                ? "हस्तनिर्मित। प्रामाणिक। आपका।"
+                : "Handcrafted. Authentic. Yours."}
+            </h2>
+
+            <p className="text-[11px] sm:text-xs text-[#E0D0C5] dark:text-[#B3A79E] leading-relaxed max-w-sm">
+              {language === "hi"
+                ? "भारतीय कारीगरों द्वारा निर्मित अनूठी कलाकृतियां खोजें।"
+                : "Discover unique crafts made by Indian artisans."}
+            </p>
+
+            <div className="pt-1 sm:pt-1.5">
+              <button
+                type="button"
+                onClick={() => onNavigateTab("explore")}
+                className="px-3.5 sm:px-4 py-2 bg-kk-primary hover:bg-kk-primary-dark active:scale-95 text-white text-xs font-semibold rounded-xl shadow-xs border border-white/15 dark:border-transparent transition-all flex items-center gap-1.5 shrink-0 interactive-hover-btn"
+              >
+                <span>{language === "hi" ? "कारीगरी संग्रह देखें" : "Explore Collections"}</span>
+                <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+              </button>
+            </div>
           </div>
 
-          <h2 className="text-base sm:text-xl md:text-2xl font-black tracking-tight leading-snug break-normal">
-            {language === "hi"
-              ? "भारत के पुश्तैनी शिल्पकारों की अनूठी कलाकृतियां"
-              : "Timeless Indian Craft, Directly from the Maker"}
-          </h2>
-
-          <p className="text-xs sm:text-sm text-slate-300 dark:text-[#B3A79E] font-normal leading-relaxed break-normal">
-            {language === "hi"
-              ? "बिना किसी बिचौलिए के प्रामाणिक मिट्टी, सिल्क, पीतल व काष्ठ शिल्प सीधे बुनकरों व शिल्पकारों के घर से पाएं।"
-              : "Discover master-crafted handlooms, chiseled brass, and alluvial terracotta with verified heritage provenance."}
-          </p>
-
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigateTab("explore")}
-              className="px-4 py-2.5 bg-kk-primary hover:bg-kk-primary-dark text-white text-xs font-bold rounded-xl shadow-md shadow-kk-ink/40 dark:shadow-black/40 active:scale-95 transition-all flex items-center justify-center gap-1.5 shrink-0"
-            >
-              <span>{language === "hi" ? "कारीगरी संग्रह देखें" : "Explore Collections"}</span>
-              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigateTab("trending")}
-              className="px-3.5 py-2.5 bg-kk-ink-soft/80 hover:bg-kk-ink-soft dark:bg-[#352C27] dark:hover:bg-[#40352F] text-slate-200 dark:text-[#F6EFEA] border border-kk-ink-soft dark:border-[#4D3F37] rounded-xl text-xs font-semibold transition-all flex items-center justify-center shrink-0"
-            >
-              {language === "hi" ? "ट्रेंडिंग शिल्प" : "Trending Crafts"}
-            </button>
+          {/* Authentic Handicraft Product Imagery */}
+          <div className="shrink-0 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-xl sm:rounded-2xl overflow-hidden shadow-xs border border-[#7C4E37] dark:border-[#3D3128] bg-[#42271A] dark:bg-[#1E1714]">
+            <img
+              src={PRODUCT_IMAGES.terracottaDiya}
+              alt={language === "hi" ? "भारतीय हस्तशिल्प" : "Handcrafted Indian Handicraft"}
+              className="w-full h-full object-cover object-center"
+              loading="eager"
+            />
           </div>
         </div>
-
-        {/* Subtle Decorative Backdrop Elements */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-radial from-kk-primary/15 to-transparent pointer-events-none" />
       </div>
 
       {/* Bold Artisan Direct Benefit Promo Banner (Coffee-shop app inspired pattern) */}
@@ -123,7 +130,7 @@ export const BuyerHomeView: React.FC<BuyerHomeViewProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTab("explore")}
-            className="text-xs font-semibold text-kk-primary hover:underline flex items-center gap-0.5"
+            className="text-xs font-semibold text-kk-primary hover:underline flex items-center gap-0.5 interactive-hover-pill"
           >
             <span>{language === "hi" ? "सभी" : "View All"}</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -131,13 +138,13 @@ export const BuyerHomeView: React.FC<BuyerHomeViewProps> = ({
         </div>
 
         {/* Horizontal Category Carousel */}
-        <div className="flex items-stretch gap-2.5 overflow-x-auto overflow-y-hidden flex-nowrap no-scrollbar pb-1.5 scroll-smooth snap-x">
+        <div className="flex items-stretch gap-2.5 overflow-x-auto overflow-y-visible flex-nowrap no-scrollbar pt-1 pb-1.5 scroll-smooth snap-x">
           {BUYER_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => onSelectCategory(cat.craftDomain)}
-              className="group shrink-0 w-[104px] min-w-[104px] max-w-[104px] sm:w-32 bg-white rounded-2xl border border-kk-line shadow-2xs hover:shadow-md hover:border-stone-300 p-2 text-left transition-all active:scale-95 flex flex-col justify-between snap-start"
+              className="group shrink-0 w-[104px] min-w-[104px] max-w-[104px] sm:w-32 bg-white rounded-2xl border border-kk-line shadow-2xs interactive-hover-card kk-card-interactive p-2 text-left flex flex-col justify-between snap-start"
             >
               {/* Category Thumbnail Image */}
               <div className="aspect-square w-full rounded-xl overflow-hidden bg-stone-100 mb-2 shrink-0">
@@ -145,7 +152,7 @@ export const BuyerHomeView: React.FC<BuyerHomeViewProps> = ({
                   src={cat.image}
                   alt={cat.nameEn}
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover kk-card-img"
                 />
               </div>
 
@@ -184,7 +191,7 @@ export const BuyerHomeView: React.FC<BuyerHomeViewProps> = ({
 
         <div className="flex overflow-x-auto overflow-y-visible flex-nowrap gap-3 pb-3 pt-1 no-scrollbar scroll-smooth snap-x md:grid md:grid-cols-4 md:gap-4 md:overflow-visible">
           {featuredProducts.map((item) => (
-            <div key={item.id} className="w-[156px] min-w-[156px] sm:w-[172px] sm:min-w-[172px] shrink-0 md:w-auto md:min-w-0 md:max-w-none md:shrink flex flex-col snap-start">
+            <div key={`featured-${item.id}`} className="w-[156px] min-w-[156px] sm:w-[172px] sm:min-w-[172px] shrink-0 md:w-auto md:min-w-0 md:max-w-none md:shrink flex flex-col snap-start">
               <BuyerProductCard
                 item={item}
                 language={language}

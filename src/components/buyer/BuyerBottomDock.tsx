@@ -105,7 +105,7 @@ export const BuyerBottomDock: React.FC<BuyerBottomDockProps> = ({
               onClick={() => onSelectTab(item.id)}
               aria-label={label}
               aria-current={isActive ? "page" : undefined}
-              className="relative flex-1 min-w-0 py-1.5 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 active:scale-[0.96] hover:scale-[1.03] group outline-hidden"
+              className="relative flex-1 min-w-0 py-1.5 px-1 rounded-2xl flex flex-col items-center justify-center group outline-hidden interactive-hover-nav kk-nav-item-interactive"
             >
               {/* Sliding Glass Highlight Indicator */}
               {isActive && (

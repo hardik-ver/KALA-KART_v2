@@ -130,7 +130,7 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
                 type="button"
                 onClick={item.onClick}
                 aria-label={label}
-                className="relative flex-1 min-w-0 py-1 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 active:scale-[0.94] hover:scale-[1.05] group outline-hidden"
+                className="relative flex-1 min-w-0 py-1 px-1 rounded-2xl flex flex-col items-center justify-center group outline-hidden interactive-hover-nav kk-nav-item-interactive"
               >
                 <div className="relative p-1 rounded-xl bg-kk-primary text-white shadow-md shadow-kk-primary/30 flex items-center justify-center group-hover:bg-kk-primary-dark transition-colors">
                   <Icon className="w-4 h-4" strokeWidth={2.6} />
@@ -149,7 +149,7 @@ export const SellerBottomNav: React.FC<SellerBottomNavProps> = ({
               onClick={item.onClick}
               aria-label={label}
               aria-current={isActive ? "page" : undefined}
-              className="relative flex-1 min-w-0 py-1.5 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 active:scale-[0.96] hover:scale-[1.03] group outline-hidden"
+              className="relative flex-1 min-w-0 py-1.5 px-1 rounded-2xl flex flex-col items-center justify-center group outline-hidden interactive-hover-nav kk-nav-item-interactive"
             >
               {/* Sliding Glass Highlight Indicator */}
               {isActive && (

@@ -45,7 +45,7 @@ export const TTSButton: React.FC<TTSButtonProps> = ({
         type="button"
         onClick={handleToggle}
         title={defaultLabel}
-        className={`inline-flex items-center justify-center rounded-full transition-all active:scale-95 ${
+        className={`inline-flex items-center justify-center rounded-full kk-icon-btn-interactive ${
           isPlaying
             ? "bg-kk-primary text-white animate-pulse shadow-md shadow-kk-primary/30"
             : "bg-stone-100 hover:bg-kk-primary-soft text-stone-700 hover:text-kk-primary-dark"
@@ -64,7 +64,7 @@ export const TTSButton: React.FC<TTSButtonProps> = ({
     <button
       type="button"
       onClick={handleToggle}
-      className={`inline-flex items-center gap-2 rounded-full font-medium transition-all active:scale-95 border ${
+      className={`inline-flex items-center gap-2 rounded-full font-medium border kk-pill-interactive ${
         isPlaying
           ? "bg-kk-primary text-white border-kk-primary shadow-md shadow-kk-primary/30 animate-pulse"
           : "bg-kk-primary-soft/60 hover:bg-kk-primary-soft text-kk-primary-dark border-kk-primary-soft"

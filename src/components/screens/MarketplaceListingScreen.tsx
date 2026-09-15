@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CatalogItem, LanguageCode } from "../../types/artisan";
 import { TTSButton } from "../common/TTSButton";
 import { playTextToSpeech, soundEffects } from "../../utils/speechUtils";
@@ -45,18 +45,6 @@ export const MarketplaceListingScreen: React.FC<MarketplaceListingScreenProps> =
       : selectedTier === "market"
       ? catalog.pricing.marketPrice
       : catalog.pricing.exhibitionPrice;
-
-  // Audio greeting
-  useEffect(() => {
-    const text =
-      language === "hi"
-        ? "आपका अंतिम उत्पाद कार्ड तैयार है। नीचे दिए गए 'एक क्लिक में बेचें' बटन को दबाएं।"
-        : "Final product catalog ready. Click 'Publish Listing' to syndicate to ONDC and marketplaces.";
-    const timer = setTimeout(() => {
-      playTextToSpeech(text, language);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, [language]);
 
   const handlePublish = () => {
     setIsPublishing(true);

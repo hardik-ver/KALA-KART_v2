@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { LanguageCode } from "../../types/artisan";
-import { playTextToSpeech, stopTextToSpeech } from "../../utils/speechUtils";
 import { KalaKartLogo } from "../common/KalaKartLogo";
 import { WavesBackground } from "../common/WavesBackground";
 
@@ -12,24 +11,14 @@ interface SplashScreenProps {
 
 export const SplashScreen: React.FC<SplashScreenProps> = ({ language, onFinish }) => {
   useEffect(() => {
-    const welcomeText =
-      language === "hi"
-        ? "कला-कार्ट में आपका स्वागत है। पारंपरिक शिल्प का डिजिटल मंच।"
-        : "Welcome to Kala-Kart. Empowering Traditional Craftsmanship.";
-    const voiceTimer = setTimeout(() => {
-      playTextToSpeech(welcomeText, language);
-    }, 400);
-
     const timer = setTimeout(() => {
       onFinish();
     }, 2400);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(voiceTimer);
-      stopTextToSpeech();
     };
-  }, [language, onFinish]);
+  }, [onFinish]);
 
   return (
     <div

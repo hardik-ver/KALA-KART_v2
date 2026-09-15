@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CatalogItem, LanguageCode, PricingTiers } from "../../types/artisan";
 import {
   PricingPredictionResult,
@@ -6,7 +6,7 @@ import {
   ProductPricingFeatures,
 } from "../../types/pricing";
 import { TTSButton } from "../common/TTSButton";
-import { playTextToSpeech, stopTextToSpeech, soundEffects } from "../../utils/speechUtils";
+import { playTextToSpeech, soundEffects } from "../../utils/speechUtils";
 import {
   buildProductPricingFeatures,
   normalizeCategory,
@@ -99,21 +99,6 @@ export const PricingAssistantScreen: React.FC<PricingAssistantScreenProps> = ({
   // Accordion UI toggles
   const [showProductDetails, setShowProductDetails] = useState<boolean>(false);
   const [showTransparency, setShowTransparency] = useState<boolean>(false);
-
-  // Greeting audio
-  useEffect(() => {
-    const greetingText =
-      language === "hi"
-        ? "मूल्य निर्धारण सहायक में आपका स्वागत है। अपनी उत्पादन लागत दर्ज करें और AI मूल्य सुझाव प्राप्त करें।"
-        : "Welcome to Pricing Assistant. Enter your production cost and get an AI price suggestion.";
-    const timer = setTimeout(() => {
-      playTextToSpeech(greetingText, language);
-    }, 400);
-    return () => {
-      clearTimeout(timer);
-      stopTextToSpeech();
-    };
-  }, [language]);
 
   // Handle "Get AI Price Suggestion" Click
   const handleGetPriceSuggestion = async () => {

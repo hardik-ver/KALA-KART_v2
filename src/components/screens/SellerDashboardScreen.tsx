@@ -36,6 +36,7 @@ import {
 import { DEFAULT_USER } from "../../data/sampleCrafts";
 import { TTSButton } from "../common/TTSButton";
 import { useTheme } from "../../context/ThemeContext";
+import { ArtisanProductDetailModal } from "../seller/ArtisanProductDetailModal";
 
 interface SellerDashboardScreenProps {
   user: ArtisanUser | null;
@@ -69,6 +70,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
   onOpenCodeModal,
 }) => {
   const [selectedOrder, setSelectedOrder] = useState<RecentOrder | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<CatalogItem | null>(null);
   const [showMenu, setShowMenu] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -142,7 +144,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
             <button
               type="button"
               onClick={() => setShowMenu(!showMenu)}
-              className="p-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg border border-kk-line transition-colors"
+              className="p-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg border border-kk-line transition-colors interactive-hover-nav"
               aria-label="Settings and Options"
             >
               <MoreVertical className="w-4 h-4" />
@@ -166,7 +168,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowMenu(false)}
-                    className="text-stone-400 hover:text-stone-600 p-0.5"
+                    className="text-stone-400 hover:text-stone-600 p-0.5 interactive-hover-nav"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -186,7 +188,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                         onClick={() => {
                           onLanguageChange("hi");
                         }}
-                        className={`py-1 rounded-md transition-all ${
+                        className={`py-1 rounded-md transition-all interactive-hover-pill ${
                           language === "hi"
                             ? "bg-kk-primary text-white shadow-2xs"
                             : "text-stone-700 hover:text-stone-900 hover:bg-white/60"
@@ -199,7 +201,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                         onClick={() => {
                           onLanguageChange("en");
                         }}
-                        className={`py-1 rounded-md transition-all ${
+                        className={`py-1 rounded-md transition-all interactive-hover-pill ${
                           language === "en"
                             ? "bg-kk-primary text-white shadow-2xs"
                             : "text-stone-700 hover:text-stone-900 hover:bg-white/60"
@@ -238,7 +240,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                     <button
                       type="button"
                       onClick={() => setTheme("light")}
-                      className={`py-1 px-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+                      className={`py-1 px-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 interactive-hover-pill ${
                         theme === "light"
                           ? "bg-kk-primary text-white shadow-2xs"
                           : "text-stone-700 hover:text-stone-900 hover:bg-white/60"
@@ -251,7 +253,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                     <button
                       type="button"
                       onClick={() => setTheme("dark")}
-                      className={`py-1 px-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+                      className={`py-1 px-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 interactive-hover-pill ${
                         theme === "dark"
                           ? "bg-kk-primary text-white shadow-2xs"
                           : "text-stone-700 hover:text-stone-900 hover:bg-white/60"
@@ -271,7 +273,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                       setShowMenu(false);
                       onNavigateBuyer();
                     }}
-                    className="w-full text-left p-2 rounded-xl hover:bg-kk-primary-soft/50 text-kk-primary font-semibold text-xs flex items-center justify-between transition-colors"
+                    className="w-full text-left p-2 rounded-xl hover:bg-kk-primary-soft/50 text-kk-primary font-semibold text-xs flex items-center justify-between transition-colors interactive-hover-row"
                   >
                     <div className="flex items-center gap-2">
                       <ShoppingBag className="w-3.5 h-3.5" />
@@ -288,7 +290,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                       setShowMenu(false);
                       onOpenAdminMarketData();
                     }}
-                    className="w-full text-left p-2 rounded-xl hover:bg-stone-50 text-stone-700 font-medium text-xs flex items-center justify-between transition-colors"
+                    className="w-full text-left p-2 rounded-xl hover:bg-stone-50 text-stone-700 font-medium text-xs flex items-center justify-between transition-colors interactive-hover-row"
                   >
                     <div className="flex items-center gap-2">
                       <Database className="w-3.5 h-3.5 text-amber-600" />
@@ -305,7 +307,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                       setShowMenu(false);
                       onOpenCodeModal();
                     }}
-                    className="w-full text-left p-2 rounded-xl hover:bg-stone-50 text-stone-700 font-medium text-xs flex items-center justify-between transition-colors"
+                    className="w-full text-left p-2 rounded-xl hover:bg-stone-50 text-stone-700 font-medium text-xs flex items-center justify-between transition-colors interactive-hover-row"
                   >
                     <div className="flex items-center gap-2">
                       <Code2 className="w-3.5 h-3.5 text-blue-600" />
@@ -323,7 +325,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                         setShowMenu(false);
                         onLogout();
                       }}
-                      className="w-full text-left p-2 rounded-xl hover:bg-red-50 text-red-600 font-medium text-xs flex items-center gap-2 transition-colors"
+                      className="w-full text-left p-2 rounded-xl hover:bg-red-50 text-red-600 font-medium text-xs flex items-center gap-2 transition-colors interactive-hover-row"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>{language === "hi" ? "लॉगआउट करें" : "Sign Out"}</span>
@@ -342,27 +344,16 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
         <button
           type="button"
           onClick={handleTriggerSell}
-          className="relative overflow-hidden w-full p-5 sm:p-6 md:p-6.5 bg-gradient-to-br from-[#38281F] via-[#2A1D17] to-[#1C130E] dark:from-[#2C1F18] dark:via-[#201712] dark:to-[#150F0B] text-white rounded-2xl sm:rounded-3xl flex items-center justify-between shadow-xl shadow-[#1C130E]/25 dark:shadow-black/60 active:scale-[0.98] transition-all group border border-[#5C4334]/80 dark:border-[#4A3427] hover:border-kk-primary"
+          className="relative overflow-hidden w-full p-5 sm:p-6 md:p-6.5 bg-[#2A1D17] dark:bg-[#1C140F] text-white rounded-2xl sm:rounded-3xl flex items-center justify-between shadow-xl shadow-[#1C130E]/25 dark:shadow-black/60 border border-[#5C4334]/80 dark:border-[#4A3427] hover:border-kk-primary group interactive-hover-card kk-card-interactive"
         >
-          {/* Subtle warm ember / ambient gradient accents preserving the dark brownish theme */}
-          <div className="absolute -top-16 -right-16 w-52 h-52 bg-gradient-to-br from-kk-primary/30 via-kk-primary-dark/15 to-transparent rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-tr from-[#8C5331]/20 via-transparent to-transparent rounded-full blur-xl pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" />
-
           <div className="relative z-10 flex items-center gap-4 sm:gap-5 text-left">
-            <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-gradient-to-br from-kk-primary to-kk-primary-dark flex items-center justify-center text-white shadow-lg shadow-black/30 group-hover:scale-105 transition-transform flex-shrink-0 border border-white/20">
+            <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-kk-primary flex items-center justify-center text-white shadow-lg shadow-black/30 group-hover:scale-105 transition-transform flex-shrink-0 border border-white/20">
               <PlusCircle className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
             <div>
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#EDD6C8] dark:text-[#E8A57A] block">
-                {language === "hi" ? "AI कैमरा व स्टूडियो एनहांसर" : "AI Camera & Studio Enhancer"}
-              </span>
-              <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-white dark:text-[#FBF7F4] leading-tight mt-0.5">
+              <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-white dark:text-[#FBF7F4] leading-tight">
                 {language === "hi" ? "+ नया उत्पाद बेचें (Sell New Craft)" : "+ SELL NEW CRAFT PRODUCT"}
               </h3>
-              <p className="text-xs sm:text-sm text-[#D7CCC4] dark:text-[#C5B8AF] font-normal mt-1">
-                {language === "hi" ? "फोटो खींचें • आवाज से विवरण • तुरंत लिस्ट करें" : "Snap photo • Voice catalog • Instant listing"}
-              </p>
             </div>
           </div>
           <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 dark:bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-kk-primary group-hover:border-kk-primary transition-all flex-shrink-0 group-hover:translate-x-0.5">
@@ -406,7 +397,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
             onClick={onViewInventory}
             role="button"
             tabIndex={0}
-            className="p-3 bg-white rounded-2xl border border-kk-line shadow-xs flex flex-col justify-between cursor-pointer hover:border-orange-300 active:scale-[0.97] transition-all"
+            className="p-3 bg-white dark:bg-[#1E1713] rounded-2xl border border-kk-line dark:border-[#382B24] shadow-xs flex flex-col justify-between cursor-pointer interactive-hover-card kk-card-interactive"
           >
             <div className="flex items-center justify-between text-stone-500 mb-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider">
@@ -458,7 +449,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
           <button
             type="button"
             onClick={onViewInventory}
-            className="text-xs text-kk-primary font-semibold flex items-center gap-0.5 hover:underline"
+            className="text-xs text-kk-primary font-semibold flex items-center gap-0.5 hover:underline interactive-hover-pill"
           >
             <span>{language === "hi" ? "सभी देखें" : "View All"}</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -478,23 +469,17 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
             return (
               <div
                 key={item.id}
-                onClick={() => {
-                  if (onSelectItem) {
-                    onSelectItem(item);
-                  } else {
-                    onViewInventory();
-                  }
-                }}
+                onClick={() => setSelectedProduct(item)}
                 role="button"
                 tabIndex={0}
-                className="w-48 sm:w-52 flex-shrink-0 snap-start bg-white rounded-2xl border border-kk-line shadow-xs overflow-hidden cursor-pointer hover:border-kk-primary hover:shadow-md transition-all flex flex-col group"
+                className="w-48 sm:w-52 flex-shrink-0 snap-start bg-white dark:bg-[#1E1713] rounded-2xl border border-kk-line dark:border-[#382B24] shadow-xs overflow-hidden cursor-pointer flex flex-col group interactive-hover-card kk-card-interactive"
               >
                 {/* Photo with status badge */}
                 <div className="relative w-full h-32 bg-stone-900 overflow-hidden">
                   <img
                     src={item.studioImage || item.originalImage}
                     alt={item.titleEn}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover kk-card-img"
                   />
                   {/* Status Badge */}
                   <span
@@ -539,7 +524,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
             onClick={handleTriggerSell}
             role="button"
             tabIndex={0}
-            className="w-40 sm:w-44 flex-shrink-0 snap-start bg-kk-primary-soft/30 dark:bg-[#251E1A] rounded-2xl border-2 border-dashed border-kk-primary-soft dark:border-[#42352D] hover:border-kk-primary hover:bg-kk-primary-soft/50 dark:hover:bg-[#2E2622] dark:hover:border-kk-primary cursor-pointer transition-all flex flex-col items-center justify-center p-4 text-center group active:scale-95"
+            className="w-40 sm:w-44 flex-shrink-0 snap-start bg-kk-primary-soft/30 dark:bg-[#251E1A] rounded-2xl border-2 border-dashed border-kk-primary-soft dark:border-[#42352D] hover:border-kk-primary hover:bg-kk-primary-soft/50 dark:hover:bg-[#2E2622] dark:hover:border-kk-primary cursor-pointer flex flex-col items-center justify-center p-4 text-center group interactive-hover-card kk-card-interactive"
           >
             <div className="w-10 h-10 rounded-full bg-kk-primary text-white flex items-center justify-center mb-2 shadow-xs group-hover:scale-110 transition-transform">
               <Plus className="w-5 h-5" />
@@ -574,7 +559,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
               onClick={() => setSelectedOrder(order)}
               role="button"
               tabIndex={0}
-              className="p-3 bg-white dark:bg-[#1E1713] rounded-xl border border-kk-line dark:border-[#382B24] shadow-xs flex items-center justify-between gap-3 cursor-pointer hover:border-stone-300 dark:hover:border-[#523F34] active:scale-[0.98] transition-all"
+              className="p-3 bg-white dark:bg-[#1E1713] rounded-xl border border-kk-line dark:border-[#382B24] shadow-xs flex items-center justify-between gap-3 cursor-pointer interactive-hover-row kk-row-interactive"
             >
               <div className="flex items-center gap-3 min-w-0 flex-1">
                 <img
@@ -591,7 +576,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                       {order.orderNumber}
                     </span>
                   </div>
-                  <h4 className="text-xs font-semibold text-kk-ink dark:text-[#F6EFEA] line-clamp-2 leading-snug mt-1">
+                  <h4 className="text-xs font-semibold text-kk-ink dark:text-[#F6EFEA] truncate mt-1">
                     {order.buyerName}{" "}
                     <span className="font-bold text-kk-primary whitespace-nowrap">
                       • {order.quantity}x
@@ -639,43 +624,57 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 12 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-3xl max-w-sm w-full p-5 border border-kk-line shadow-2xl space-y-4 font-sans"
+              className="bg-white dark:bg-[#1E1713] text-kk-ink dark:text-[#F6EFEA] rounded-3xl max-w-sm w-full p-5 border border-kk-line dark:border-[#382B24] shadow-2xl space-y-4 font-sans max-h-[85vh] overflow-y-auto"
             >
-              <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+              <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#332A24] pb-3">
                 <div>
-                  <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider">Order Details</span>
-                  <h3 className="text-sm font-bold text-kk-ink">{selectedOrder.orderNumber}</h3>
+                  <span className="text-[10px] font-semibold text-stone-400 dark:text-[#9A8B80] uppercase tracking-wider">
+                    {language === "hi" ? "ऑर्डर विवरण" : "Order Details"}
+                  </span>
+                  <h3 className="text-sm font-bold text-kk-ink dark:text-[#F6EFEA]">{selectedOrder.orderNumber}</h3>
                 </div>
-                <span className="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                  {selectedOrder.status}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full">
+                    {selectedOrder.status}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedOrder(null)}
+                    aria-label="Close"
+                    className="p-1 rounded-full text-stone-400 hover:text-stone-700 dark:hover:text-[#F6EFEA] hover:bg-stone-100 dark:hover:bg-[#332A24] transition-colors interactive-hover-nav"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <img
                   src={selectedOrder.itemImage}
                   alt={selectedOrder.itemTitle}
-                  className="w-14 h-14 rounded-xl object-cover border border-kk-line"
+                  className="w-14 h-14 rounded-xl object-cover border border-kk-line dark:border-[#382B24]"
                 />
                 <div>
-                  <h4 className="font-semibold text-xs text-kk-ink">{selectedOrder.itemTitle}</h4>
-                  <p className="text-xs text-stone-500 font-normal mt-0.5">Quantity: {selectedOrder.quantity} units</p>
+                  <h4 className="font-semibold text-xs text-kk-ink dark:text-[#F6EFEA]">{selectedOrder.itemTitle}</h4>
+                  <p className="text-xs text-stone-500 dark:text-[#9A8B80] font-normal mt-0.5">
+                    {language === "hi" ? "मात्रा" : "Quantity"}: {selectedOrder.quantity} {language === "hi" ? "इकाइयाँ" : "units"}
+                  </p>
                   <p className="text-sm font-bold text-kk-primary mt-1">₹{selectedOrder.amount.toLocaleString("en-IN")}</p>
                 </div>
               </div>
 
-              <div className="p-3 bg-stone-50 rounded-xl space-y-1 text-xs">
+              <div className="p-3 bg-stone-50 dark:bg-[#2A201A] rounded-xl space-y-1 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-stone-500 font-normal">Buyer:</span>
-                  <span className="font-semibold text-kk-ink">{selectedOrder.buyerName}</span>
+                  <span className="text-stone-500 dark:text-[#9A8B80] font-normal">{language === "hi" ? "खरीदार:" : "Buyer:"}</span>
+                  <span className="font-semibold text-kk-ink dark:text-[#F6EFEA]">{selectedOrder.buyerName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-stone-500 font-normal">Channel:</span>
-                  <span className="font-semibold text-stone-700">{selectedOrder.buyerTypeLabel}</span>
+                  <span className="text-stone-500 dark:text-[#9A8B80] font-normal">{language === "hi" ? "चैनल:" : "Channel:"}</span>
+                  <span className="font-semibold text-stone-700 dark:text-[#D5C8C0]">{selectedOrder.buyerTypeLabel}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-stone-500 font-normal">Ordered:</span>
-                  <span className="font-medium text-stone-600">{selectedOrder.date}</span>
+                  <span className="text-stone-500 dark:text-[#9A8B80] font-normal">{language === "hi" ? "ऑर्डर दिनांक:" : "Ordered:"}</span>
+                  <span className="font-medium text-stone-600 dark:text-[#B3A79E]">{selectedOrder.date}</span>
                 </div>
               </div>
 
@@ -683,7 +682,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                 <button
                   type="button"
                   onClick={handleTriggerSell}
-                  className="flex-1 py-2.5 bg-kk-primary text-white rounded-xl text-xs font-semibold hover:bg-kk-primary-dark active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2.5 bg-kk-primary text-white rounded-xl text-xs font-semibold hover:bg-kk-primary-dark transition-all flex items-center justify-center gap-1.5 interactive-hover-btn"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>{language === "hi" ? "नया जोड़ें" : "Add Similar"}</span>
@@ -691,7 +690,7 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="flex-1 py-2.5 bg-stone-100 text-stone-700 rounded-xl text-xs font-semibold hover:bg-stone-200 active:scale-95 transition-all"
+                  className="flex-1 py-2.5 bg-stone-100 dark:bg-[#332A24] text-stone-700 dark:text-[#E8DDD5] rounded-xl text-xs font-semibold hover:bg-stone-200 dark:hover:bg-[#40342D] transition-all interactive-hover-btn"
                 >
                   {language === "hi" ? "बंद करें" : "Close"}
                 </button>
@@ -700,6 +699,13 @@ export const SellerDashboardScreen: React.FC<SellerDashboardScreenProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Active Product Catalog Item Detail Modal */}
+      <ArtisanProductDetailModal
+        product={selectedProduct}
+        language={language}
+        onClose={() => setSelectedProduct(null)}
+      />
     </div>
   );
 };

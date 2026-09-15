@@ -133,7 +133,7 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("all")}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap kk-pill-interactive ${
               statusFilter === "all"
                 ? "bg-kk-primary text-white shadow-2xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -144,7 +144,7 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("pending")}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap kk-pill-interactive ${
               statusFilter === "pending"
                 ? "bg-amber-600 text-white shadow-2xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -155,7 +155,7 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("shipped")}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap kk-pill-interactive ${
               statusFilter === "shipped"
                 ? "bg-blue-600 text-white shadow-2xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -166,7 +166,7 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("completed")}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all whitespace-nowrap kk-pill-interactive ${
               statusFilter === "completed"
                 ? "bg-emerald-600 text-white shadow-2xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -198,13 +198,13 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
               onClick={() => setSelectedOrder(order)}
               role="button"
               tabIndex={0}
-              className="p-3.5 bg-white rounded-2xl border border-kk-line shadow-xs flex items-center justify-between gap-3 cursor-pointer hover:border-kk-primary transition-all group"
+              className="p-3.5 bg-white rounded-2xl border border-kk-line shadow-xs flex items-center justify-between gap-3 cursor-pointer group kk-card-interactive"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <img
                   src={order.itemImage}
                   alt={order.itemTitle}
-                  className="w-13 h-13 rounded-xl object-cover shrink-0 border border-kk-line"
+                  className="w-13 h-13 rounded-xl object-cover shrink-0 border border-kk-line kk-card-img"
                 />
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 flex-wrap">
@@ -219,12 +219,12 @@ export const SellerOrdersScreen: React.FC<SellerOrdersScreenProps> = ({
                       {order.orderNumber}
                     </span>
                   </div>
-                  <h4 className="text-xs font-bold text-kk-ink truncate mt-1">
-                    {order.buyerName}
+                  <h4 className="text-xs sm:text-sm font-bold text-kk-ink truncate mt-1">
+                    {order.buyerName}{" "}
+                    <span className="font-bold text-kk-primary whitespace-nowrap">
+                      • {order.quantity}x
+                    </span>
                   </h4>
-                  <p className="text-[11px] text-stone-500 truncate">
-                    {order.quantity}x {order.itemTitle}
-                  </p>
                   <p className="text-[10px] text-stone-400 mt-0.5">
                     {order.date}
                   </p>

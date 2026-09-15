@@ -146,7 +146,6 @@ export default function App() {
     setStudioImage(item.studioImage);
     const matchedCraft = CRAFT_CATEGORIES.find((c) => c.id === item.category) || CRAFT_CATEGORIES[0];
     setSelectedCraft(matchedCraft);
-    setCurrentScreen("sell_publish");
   };
 
   // Step 1 (Onboarding) -> Step 2 (Image Studio)

@@ -262,7 +262,7 @@ export const SellerAccountScreen: React.FC<SellerAccountScreenProps> = ({
           <button
             type="button"
             onClick={onNavigateBuyer}
-            className="w-full text-left p-2.5 rounded-xl hover:bg-stone-50 text-stone-700 flex items-center justify-between transition-colors border border-transparent hover:border-stone-200"
+            className="w-full text-left p-2.5 rounded-xl text-stone-700 flex items-center justify-between border border-transparent kk-row-interactive"
           >
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-kk-primary-soft text-kk-primary-dark flex items-center justify-center font-bold text-xs">
@@ -283,7 +283,7 @@ export const SellerAccountScreen: React.FC<SellerAccountScreenProps> = ({
           <button
             type="button"
             onClick={onOpenAdminMarketData}
-            className="w-full text-left p-2.5 rounded-xl hover:bg-stone-50 text-stone-700 flex items-center justify-between transition-colors border border-transparent hover:border-stone-200"
+            className="w-full text-left p-2.5 rounded-xl text-stone-700 flex items-center justify-between border border-transparent kk-row-interactive"
           >
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs">
@@ -304,7 +304,7 @@ export const SellerAccountScreen: React.FC<SellerAccountScreenProps> = ({
           <button
             type="button"
             onClick={onOpenCodeModal}
-            className="w-full text-left p-2.5 rounded-xl hover:bg-stone-50 text-stone-700 flex items-center justify-between transition-colors border border-transparent hover:border-stone-200"
+            className="w-full text-left p-2.5 rounded-xl text-stone-700 flex items-center justify-between border border-transparent kk-row-interactive"
           >
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-xs">

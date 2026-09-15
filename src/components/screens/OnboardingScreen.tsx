@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CraftCategory, LanguageCode } from "../../types/artisan";
 import { CRAFT_CATEGORIES } from "../../data/sampleCrafts";
 import { TTSButton } from "../common/TTSButton";
-import { playTextToSpeech, stopTextToSpeech } from "../../utils/speechUtils";
+import { playTextToSpeech } from "../../utils/speechUtils";
 import { 
   ArrowRight,
   Sparkles,
@@ -26,20 +26,6 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   onProceed,
   onBack,
 }) => {
-  // Voice welcome greeting
-  useEffect(() => {
-    const greeting = language === "hi" 
-      ? "नमस्ते शिल्पकार जी! अपने उत्पाद की शिल्प श्रेणी चुनें।"
-      : "Welcome! Tap your craft category to begin digitizing your product.";
-    const timer = setTimeout(() => {
-      playTextToSpeech(greeting, language);
-    }, 400);
-    return () => {
-      clearTimeout(timer);
-      stopTextToSpeech();
-    };
-  }, [language]);
-
   const getCraftEmoji = (id: string) => {
     switch (id) {
       case "pottery":

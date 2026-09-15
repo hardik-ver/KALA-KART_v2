@@ -53,7 +53,9 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
     setTimeout(() => setAddedAnimation(false), 1800);
   };
 
-  const imagesList = [item.studioImage, item.originalImage].filter(Boolean) as string[];
+  const imagesList = Array.from(
+    new Set([item.studioImage, item.originalImage].filter(Boolean) as string[])
+  );
 
   return (
     <AnimatePresence>
@@ -126,7 +128,7 @@ export const BuyerProductDetailModal: React.FC<BuyerProductDetailModalProps> = (
                 <div className="flex items-center gap-2">
                   {imagesList.map((img, idx) => (
                     <button
-                      key={img}
+                      key={`${img}-${idx}`}
                       type="button"
                       onClick={() => setSelectedImage(img)}
                       className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all ${

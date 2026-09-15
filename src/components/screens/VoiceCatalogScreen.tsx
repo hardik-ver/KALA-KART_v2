@@ -99,22 +99,6 @@ export const VoiceCatalogScreen: React.FC<VoiceCatalogScreenProps> = ({
   const recognitionRef = useRef<any>(null);
   const waveIntervalRef = useRef<any>(null);
 
-  // Audio greeting guidance on mount
-  useEffect(() => {
-    const greeting =
-      language === "hi"
-        ? "माइक दबाकर अपने उत्पाद के बारे में अपनी भाषा में बोलें। जैसे कि यह क्या है, किस सामग्री से बना है और इसका रंग क्या है।"
-        : "Hold the microphone and describe your handcrafted product in your natural language.";
-    const timer = setTimeout(() => {
-      playTextToSpeech(greeting, language);
-    }, 400);
-
-    return () => {
-      clearTimeout(timer);
-      stopTextToSpeech();
-    };
-  }, [language]);
-
   // Sync edited fields when a new catalog is generated
   useEffect(() => {
     if (catalog) {

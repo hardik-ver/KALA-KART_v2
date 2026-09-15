@@ -1,5 +1,6 @@
 import { CatalogItem } from "../types/artisan";
 import { BuyerCategory } from "../types/buyer";
+import { PRODUCT_IMAGES } from "./productImages";
 
 /**
  * 9 Standard Buyer Domains as requested:
@@ -22,7 +23,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Authentic artisanal lamps, brass bells, clay diyas & traditional accents",
     descriptionHi: "कारीगरी वाले पारंपरिक दीपक, दीये, घंटियां व प्राकृतिक सज्जा",
     iconName: "Home",
-    image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.homeDecorBell,
     itemCount: 24,
     featuredCraft: "Terracotta & Brass Accents",
   },
@@ -34,7 +35,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Moradabad cast brass, Bastar Dhokra lost-wax bronze & hand-chiseled aartis",
     descriptionHi: "मुरादाबादी पीतल, बस्तर ढोकरा कांस्य एवं हाथ से तराशे गए कलात्मक दीपक",
     iconName: "Flame",
-    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.brassPeacockDiya,
     itemCount: 16,
     featuredCraft: "Moradabad Brass & Dhokra",
   },
@@ -46,7 +47,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Khurja studio ceramics, Gorakhpur alluvial terracotta & hand-thrown tableware",
     descriptionHi: "खुर्जा सिरेमिक्स, गोरखपुर प्राकृतिक टेराकोटा व चाक पर गढ़े बर्तन",
     iconName: "Coffee",
-    image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.terracottaDiya,
     itemCount: 19,
     featuredCraft: "Khurja & Gorakhpur Clay",
   },
@@ -58,7 +59,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Varanasi Kadwa silk sarees, Chanderi dupattas & handloom khadi weaves",
     descriptionHi: "बनारसी कड़वा सिल्क, चंदेरी दुपट्टे एवं हथकरघा खादी परिधान",
     iconName: "Shirt",
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.banarasiDupatta,
     itemCount: 32,
     featuredCraft: "Varanasi & Chanderi Weaves",
   },
@@ -70,7 +71,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Tribal terracotta beads, silver filigree earrings & handcrafted brass chokers",
     descriptionHi: "टेराकोटा मनके, चांदी तारकशी झुमके एवं पीतल के पारंपरिक चोकर",
     iconName: "Sparkles",
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.terracottaJewelry,
     itemCount: 14,
     featuredCraft: "Meenakari & Clay Jewelry",
   },
@@ -82,7 +83,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Saharanpur seasoned sheesham carvings, Tarkashi brass wire inlay & royal figurines",
     descriptionHi: "सहारनपुर शीशम नक्काशी, तारकशी पीतल जड़ावट व शाही काष्ठ कला",
     iconName: "TreePine",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.sheeshamElephant,
     itemCount: 18,
     featuredCraft: "Saharanpur Woodcraft",
   },
@@ -94,7 +95,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Madhubani natural pigment scrolls, Pattachitra cloth paintings & Warli tribal canvas",
     descriptionHi: "मधुबनी प्राकृतिक रंग चित्र, पट्टचित्र व वारली लोक कलाकृतियां",
     iconName: "Palette",
-    image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.madhubaniPainting,
     itemCount: 12,
     featuredCraft: "Madhubani & Pattachitra",
   },
@@ -106,7 +107,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "Curated gift boxes, brass oil lamps, artisan tea sets & festive bundles",
     descriptionHi: "हस्तशिल्प उपहार बक्से, पीतल दीपक सेट व उत्सव कॉम्बो",
     iconName: "Gift",
-    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.handcraftedGifts,
     itemCount: 20,
     featuredCraft: "Festive Craft Boxes",
   },
@@ -118,7 +119,7 @@ export const BUYER_CATEGORIES: BuyerCategory[] = [
     descriptionEn: "GI-tagged masterworks with direct artisan lineage & Shilp Guru certificates",
     descriptionHi: "जीआई-टैग्ड मास्टरपीस, शिल्प गुरु प्रमाणपत्र व ऐतिहासिक शिल्पकला",
     iconName: "Award",
-    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80",
+    image: PRODUCT_IMAGES.bastarDhokra,
     itemCount: 15,
     featuredCraft: "GI Certified Masterworks",
   },
@@ -133,8 +134,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-1",
     category: "pottery",
-    originalImage: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.terracottaDiya,
+    studioImage: PRODUCT_IMAGES.terracottaDiya,
     specs: {
       productName: "Festive Terracotta Diya",
       material: "Natural Terracotta Clay (शुद्ध चिकनी मिट्टी)",
@@ -171,8 +172,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-2",
     category: "textiles",
-    originalImage: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.banarasiDupatta,
+    studioImage: PRODUCT_IMAGES.banarasiDupatta,
     specs: {
       productName: "Banarasi Silk Dupatta",
       material: "Pure Banarasi Katan Silk",
@@ -209,8 +210,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-3",
     category: "metalcraft",
-    originalImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.brassPeacockDiya,
+    studioImage: PRODUCT_IMAGES.brassPeacockDiya,
     specs: {
       productName: "Brass Peacock Aarti Diya",
       material: "Solid Cast Brass (शुद्ध पीतल)",
@@ -247,8 +248,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-4",
     category: "woodwork",
-    originalImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.sheeshamElephant,
+    studioImage: PRODUCT_IMAGES.sheeshamElephant,
     specs: {
       productName: "Sheesham Royal Elephant",
       material: "Seasoned Sheesham Wood (शीशम)",
@@ -285,8 +286,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-5",
     category: "pottery",
-    originalImage: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.bluePotteryVase,
+    studioImage: PRODUCT_IMAGES.bluePotteryVase,
     specs: {
       productName: "Jaipur Blue Pottery Ceramic Vase",
       material: "Quartz Stone Powder & Egyptian Paste",
@@ -323,8 +324,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-6",
     category: "metalcraft",
-    originalImage: "https://images.unsplash.com/photo-1567332651009-bbdab3a6b5e3?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1567332651009-bbdab3a6b5e3?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.bastarDhokra,
+    studioImage: PRODUCT_IMAGES.bastarDhokra,
     specs: {
       productName: "Bastar Dhokra Tribal Musician Bronze",
       material: "Lost-Wax Cast Bell Metal (कांसा / ढोकरा)",
@@ -361,8 +362,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-7",
     category: "jewelry",
-    originalImage: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.terracottaJewelry,
+    studioImage: PRODUCT_IMAGES.terracottaJewelry,
     specs: {
       productName: "Earthy Terracotta Temple Choker Set",
       material: "Kiln-Fired Terracotta & Eco-friendly Jute Cord",
@@ -399,8 +400,8 @@ export const BUYER_CATALOG_EXPANDED: CatalogItem[] = [
   {
     id: "item-8",
     category: "woodwork",
-    originalImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
-    studioImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
+    originalImage: PRODUCT_IMAGES.channapatnaCoasters,
+    studioImage: PRODUCT_IMAGES.channapatnaCoasters,
     specs: {
       productName: "Channapatna Wooden Handcrafted Tea Coaster Set",
       material: "Ivory Wood (Wrightia Tinctoria) & Lacquer Dyes",

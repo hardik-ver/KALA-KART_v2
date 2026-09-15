@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { CatalogItem, LanguageCode } from "../../types/artisan";
 import { TTSButton } from "../common/TTSButton";
+import { ArtisanProductDetailModal } from "../seller/ArtisanProductDetailModal";
 
 interface InventoryScreenProps {
   items: CatalogItem[];
@@ -37,6 +38,7 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "live" | "sold" | "draft">("all");
   const [selectedQrItem, setSelectedQrItem] = useState<CatalogItem | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<CatalogItem | null>(null);
 
   const filteredItems = items.filter((item) => {
     const matchesStatus = statusFilter === "all" || item.status === statusFilter;
@@ -101,7 +103,7 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("all")}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all kk-pill-interactive ${
               statusFilter === "all"
                 ? "bg-kk-ink text-white shadow-xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -112,7 +114,7 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("live")}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all kk-pill-interactive ${
               statusFilter === "live"
                 ? "bg-emerald-700 text-white shadow-xs"
                 : "bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50"
@@ -123,7 +125,7 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
           <button
             type="button"
             onClick={() => setStatusFilter("sold")}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all kk-pill-interactive ${
               statusFilter === "sold"
                 ? "bg-stone-800 text-white shadow-xs"
                 : "bg-white text-stone-600 border border-kk-line hover:bg-stone-50"
@@ -158,17 +160,17 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
             return (
               <div
                 key={item.id}
-                onClick={() => onSelectItem && onSelectItem(item)}
+                onClick={() => setSelectedProduct(item)}
                 role="button"
                 tabIndex={0}
-                className="p-3 bg-white rounded-2xl border border-kk-line shadow-xs hover:border-kk-primary hover:shadow-md transition-all cursor-pointer flex flex-col gap-2.5 group"
+                className="p-3 bg-white rounded-2xl border border-kk-line shadow-xs cursor-pointer flex flex-col gap-2.5 group kk-card-interactive"
               >
                 <div className="flex items-start gap-3">
                   <div className="relative w-20 h-20 rounded-xl bg-stone-900 overflow-hidden flex-shrink-0">
                     <img
                       src={item.studioImage || item.originalImage}
                       alt={item.titleEn}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      className="w-full h-full object-cover kk-card-img"
                     />
                     <span
                       className={`absolute top-1 left-1 text-[8px] font-extrabold px-1.5 py-0.2 rounded-md uppercase ${
@@ -271,6 +273,13 @@ export const InventoryScreen: React.FC<InventoryScreenProps> = ({
           </div>
         </div>
       )}
+
+      {/* Product Detail Modal */}
+      <ArtisanProductDetailModal
+        product={selectedProduct}
+        language={language}
+        onClose={() => setSelectedProduct(null)}
+      />
     </div>
   );
 };
